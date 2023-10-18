@@ -1,0 +1,132 @@
+## 3.3. GESTIONE DEI RISCHI
+
+### Rischi Identificati
+
+1. **Errori nel codice**
+   - *Categoria*: Sviluppo
+   - *Probabilità*: 5 (molto alta)
+   - *Impatto*: Da 1 a 5
+   - *Azione*: Rivedere il codice e apportare modifiche.
+
+2. **Difficoltà con il linguaggio di programmazione**
+   - *Categoria*: Sviluppo
+   - *Probabilità*: 2 (bassa)
+   - *Impatto*: 3
+   - *Azione*: Rivedere le regole di programmazione e documentarsi su Internet.
+
+3. **Guasto hardware ai computer**
+   - *Categoria*: Materiale
+   - *Probabilità*: 1 (molto bassa)
+   - *Impatto*: 3 (salvo casi gravi quali rottura di tutti i pc)
+   - *Azione*: Procurarsi componenti di ricambio o, nel caso peggiore, una macchina che sostituisca quella guasta.
+
+4. **Guasto software ai computer**
+   - *Categoria*: Sviluppo
+   - *Probabilità*: 2 (bassa)
+   - *Impatto*: Da 3 a 5
+   - *Azione*: Cercare di sistemare l'errore documentandosi su Internet o, nel caso peggiore, formattare la macchina.
+
+5. **Perdita del lavoro fatto**
+   - *Categoria*: Sviluppo
+   - *Probabilità*: 1 (molto bassa)
+   - *Impatto*: 5
+   - *Azione*: Ripristino via backup.
+
+6. **Problemi di salute**
+   - *Categoria*: Personale
+   - *Probabilità*: 4 (alta)
+   - *Impatto*: Da 1 a 3 (salvo casi gravi)
+   - *Azione*: Riallocazione dei lavori per la settimana, nella speranza che la malattia sussida.
+
+7. **Modifiche dei requisiti**
+   - *Categoria*: Progetto
+   - *Probabilità*: 3 (media)
+   - *Impatto*: Da 2 a 4
+   - *Azione*: Mantenere chiaro l'obiettivo dell'app per intercettare tutte le possibili sviste presenti nella progettazione, e ridurre al minimo le modifiche dei requisiti. Documentare eventuali modifiche.
+
+8. **Problemi di comunicazione nel team**
+   - *Categoria*: Organizzativo
+   - *Probabilità*: 3 (media)
+   - *Impatto*: 4
+   - *Azione*: Organizzare riunioni regolari per discutere lo stato del progetto e chiarire gli obiettivi assegnati al singolo.
+
+9. **Sforzo sottostimato**
+   - *Categoria*: Pianificazione
+   - *Probabilità*: 4 (alta)
+   - *Impatto*: Da 3 a 5
+   - *Azione*: Rivedere periodicamente il piano di progetto e adattarlo in base all'andamento effettivo del lavoro.
+
+### Tabella dei rischi
+
+| ID  | RISCHI                             | CATEGORIA      | PROBABILITÀ | IMPATTO                  | AZIONE                                                                                                 |
+| --- | ---------------------------------- | -------------- | ----------- | ------------------------ | ------------------------------------------------------------------------------------------------------ |
+| 1   | Errori nel codice                  | Sviluppo       | 5           | 1 - 5                    | Rivedere il codice e apportare modifiche.                                                              |
+| 2   | Difficoltà con il linguaggio       | Sviluppo       | 2           | 3                        | Rivedere le regole di programmazione e documentarsi su Internet.                                       |
+| 3   | Guasto hardware                    | Materiale      | 1           | 3 (salvo casi gravi)     | Procurarsi componenti di ricambio o, nel caso peggiore, una macchina che sostituisca quella guasta.    |
+| 4   | Guasto software                    | Sviluppo       | 2           | 3 - 5                    | Cercare di sistemare l'errore documentandosi su Internet o, nel caso peggiore, formattare la macchina. |
+| 5   | Perdita del lavoro fatto           | Sviluppo       | 1           | 5                        | Se non è stata persa anche la copia del cloud, ripristinarla come backup.                              |
+| 6   | Problemi di salute                 | Personale      | 4           | 1 - 3 (salvo casi gravi) | Collaborare con gli altri membri e suddividersi il lavoro della persona ammalata a vicenda.            |
+| 7   | Modifiche dei requisiti            | Progetto       | 3           | 2 - 4   | Mantenere una comunicazione continua con il committente per intercettare possibili sviste nella progettazione e documentare eventuali modifiche. |
+| 8   | Problemi di comunicazione nel team | Organizzativo  | 3 (media)   | 4       | Organizzare riunioni regolari per favorire la comunicazione tra i membri del team e chiarire gli obiettivi assegnati.                            |
+| 9   | Sforzo sottostimato                | Pianificazione | 4 (alta)    | 3 - 5   | Rivedere periodicamente il piano di progetto e adattarlo in base all'andamento effettivo del lavoro.                                             |
+
+
+### Legenda probabilità dei rischi
+
+- 1 - probabilità molto bassa
+- 2 - probabilità bassa
+- 3 - probabilità media
+- 4 - probabilità alta
+- 5 - probabilità altissima
+
+
+### Prevenzione e monitoraggio dei rischi
+
+Per mitigare i rischi identificati durante lo sviluppo del progetto, adotteremo le seguenti misure preventive e strategie di monitoraggio:
+
+1. **Errori nel codice**
+   - *Prevenzione*: uso di debugger, unit test per garantire il rispetto della specifica stabilita. Faremo forte uso di strumenti di analisi statica come Lint (lo standard di Android Studio), FindBugs (specifico per Java) e Detekt  (specifico per Kotlin). Faremo il possibile per seguire le migliori pratiche di programmazione
+   - *Monitoraggio*: Effettuare regolarmente il controllo di errori nel codice scritto.
+
+2. **Difficoltà con il linguaggio di programmazione**
+   - *Prevenzione*: Rivedere le regole di programmazione e documentarsi su Internet in caso di difficoltà.
+   - *Monitoraggio*: Verificare il codice scritto per garantire la conformità alle regole di programmazione.
+
+3. **Guasto hardware**
+   - *Prevenzione*: Evitare di esporre i dispositivi a situazioni di pericolo.
+   - *Monitoraggio*: Effettuare controlli periodici dell'integrità dell'hardware.
+
+4. **Guasto software**
+   - *Prevenzione*: Prestare attenzione a come e cosa si installa sul proprio dispositivo.
+   - *Monitoraggio*: Controllare eventuali segnali software anomali e intervenire tempestivamente.
+
+5. **Perdita del lavoro fatto**
+   - *Prevenzione*: Salvare il lavoro su più posti diversi, inclusi sistemi cloud.
+   - *Monitoraggio*: Verificare che il lavoro sia stato sincronizzato online in modo regolare.
+
+6. **Problemi di salute**
+   - *Prevenzione*: Limitare il fisico a situazioni di contagio.
+   - *Monitoraggio*: Controllare eventuali sintomi e collaborare con gli altri membri per suddividere il lavoro in caso di malattia.
+
+7. **Modifiche dei requisiti**
+   - *Prevenzione*: Mantenere una comunicazione continua con il committente per intercettare possibili sviste nella progettazione e documentare eventuali modifiche.
+   - *Monitoraggio*: Verificare che le modifiche siano coerenti con i requisiti iniziali e documentarle adeguatamente.
+
+8. **Problemi di comunicazione nel team**
+   - *Prevenzione*: Organizzare riunioni regolari per favorire la comunicazione tra i membri del team e chiarire gli obiettivi assegnati.
+   - *Monitoraggio*: Monitorare la partecipazione e l'efficacia delle riunioni.
+
+9. **Sforzo sottostimato**
+   - *Prevenzione*: Rivedere periodicamente il piano di progetto e adattarlo in base all'andamento effettivo del lavoro.
+   - *Monitoraggio*: Verificare periodicamente lo stato di avanzamento del lavoro e apportare aggiornamenti al piano se necessario.
+
+Queste misure preventive e di monitoraggio ci aiuteranno a gestire in modo efficace i rischi e a garantire il successo del nostro progetto universitario.
+
+## 3.4. MECCANISMI DI MONITORAGGIO E DI CONTROLLO
+
+Il progetto verrà sviluppato in gruppo, di conseguenza il tutto sarà sotto la valutazione di tutti i componenti del team in modo da avere un controllo incrociato su documentazione e codice sorgente. Durante questo periodo ci saranno delle assegnazioni di diversi tasks per velocizzare determinate procedure di semplice implementazione, così facendo ci saranno controlli più intensi su porzioni di codice minori, migliorando sensibilmente il tutto. Per potersi confrontare si utilizzeranno i canali Discord e WhatsApp per tenere in comunicazione i membri del gruppo, Google Documents per la revisione della documentazione e GitHub per versionare il codice sorgente.
+
+## 3.5. PIANIFICAZIONE DELLO STAFF
+
+Allo scopo di realizzare il progetto, i membri del team necessitano della conoscenza del linguaggio Java e di sviluppare un grado di familiarità con l'ambiente di sviluppo Android. Allo scopo di quest'ultimo, ci si rifà alle lezioni del professor Spanò e all'approfondimento individuale. 
+Per il coordinamento dei lavori, l'idea iniziale è di usare gli stumenti di base forniti da Git. Semplici Issue per definire le task basilari ed i responsabili, e Milestone per gruppi di task che vanno completati per una scadenza. Si userà la pagina Project di Github per monitorare il progresso del progetto

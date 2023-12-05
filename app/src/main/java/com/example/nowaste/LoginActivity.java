@@ -31,6 +31,7 @@ public class LoginActivity extends AppCompatActivity {
     Button mRegisterBtn;
     ProgressBar progressBar;
     FirebaseAuth mAuth;
+    Button mProviderLogin;
 
     @Override
     public void onStart() {
@@ -56,6 +57,7 @@ public class LoginActivity extends AppCompatActivity {
         mLoginBtn = findViewById(R.id.loginBtn);
         mRegisterBtn = findViewById(R.id.registerBtn);
         progressBar = findViewById(R.id.progressBar);
+        mProviderLogin = findViewById(R.id.login_provider);
 
         mRegisterBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -98,6 +100,15 @@ public class LoginActivity extends AppCompatActivity {
                                 }
                             }
                         });
+            }
+        });
+
+        mProviderLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), LoginProviderActivity.class);
+                startActivity(intent);
+                finish();
             }
         });
     }

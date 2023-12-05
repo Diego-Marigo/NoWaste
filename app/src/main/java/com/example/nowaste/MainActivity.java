@@ -12,6 +12,9 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 public class MainActivity extends AppCompatActivity {
+    /*
+    schermata iniziale in cui si vedono le liste
+     */
     FirebaseAuth auth;
     FirebaseUser user;
     TextView textView;

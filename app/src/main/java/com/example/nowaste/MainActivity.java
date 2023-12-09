@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,6 +20,7 @@ public class MainActivity extends AppCompatActivity {
     FirebaseUser user;
     TextView textView;
     Button logout;
+    ImageButton profileButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,15 +28,16 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         auth = FirebaseAuth.getInstance();
-        logout = findViewById(R.id.logoutBtn);
         user = auth.getCurrentUser();
+        logout = findViewById(R.id.logoutBtn);
         textView = findViewById(R.id.user_details);
+        profileButton = findViewById(R.id.profile_icon);
+
         if(user == null) {
             Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
             startActivity(intent);
             finish();
         } else {
-            // scrivo tipo ciao user
             textView.setText(user.getEmail());
         }
 
@@ -43,6 +46,15 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 FirebaseAuth.getInstance().signOut();
                 Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+
+        profileButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), ProfileActivity.class);
                 startActivity(intent);
                 finish();
             }

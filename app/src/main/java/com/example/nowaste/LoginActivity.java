@@ -23,6 +23,7 @@ public class LoginActivity extends AppCompatActivity {
     gli utenti sono
     test@email.com, test2@email.com e test3@email.com con psw 123456
 
+    TODO salvare informnazioni utente nel db
      */
 
     EditText mUsername;

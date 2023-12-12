@@ -46,7 +46,7 @@ public class SettingsActivity extends AppCompatActivity implements PopupMenu.OnM
     StorageReference storageReference;
     String uid;
     ImageView set;
-    TextView editname, editpassword;
+    TextView editEmail, editPassword;
     Button daysBeforeBtn;
     ProgressDialog pd;
 
@@ -55,11 +55,11 @@ public class SettingsActivity extends AppCompatActivity implements PopupMenu.OnM
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
 
-        editname = findViewById(R.id.edit_email);
+        editEmail = findViewById(R.id.edit_email);
         set = findViewById(R.id.setting_profile_image);
         pd = new ProgressDialog(this);
         pd.setCanceledOnTouchOutside(false);
-        editpassword = findViewById(R.id.change_password);
+        editPassword = findViewById(R.id.change_password);
         daysBeforeBtn = findViewById(R.id.days_beforeBtn);
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseUser = firebaseAuth.getCurrentUser();
@@ -67,7 +67,7 @@ public class SettingsActivity extends AppCompatActivity implements PopupMenu.OnM
         storageReference = FirebaseStorage.getInstance().getReference();
         databaseReference = firebaseDatabase.getReference("Users");
 
-        editpassword.setOnClickListener(new View.OnClickListener() {
+        editPassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 pd.setMessage("Changing Password");
@@ -75,11 +75,11 @@ public class SettingsActivity extends AppCompatActivity implements PopupMenu.OnM
             }
         });
 
-        editname.setOnClickListener(new View.OnClickListener() {
+        editEmail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                pd.setMessage("Updating Name");
-                showNamephoneupdate("name");
+                pd.setMessage("Updating Email");
+                showNamephoneupdate("email");
             }
         });
 
@@ -96,6 +96,7 @@ public class SettingsActivity extends AppCompatActivity implements PopupMenu.OnM
 
     @Override
     public boolean onMenuItemClick(MenuItem menuItem) {
+        // TODO bisogna settare che in base a ciò che si sceglie si riceverà la notifica
         if(menuItem.getItemId() == R.id.item1){
             daysBeforeBtn.setText(menuItem.getTitle());
             return true;
@@ -179,7 +180,7 @@ public class SettingsActivity extends AppCompatActivity implements PopupMenu.OnM
     }
 
     // Updating name
-    // TODO sistemare metodo
+    // TODO sistemare metodo - non viene fatta l'update dell'indirizzo email
     private void showNamephoneupdate(final String key) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Update" + key);
@@ -189,11 +190,11 @@ public class SettingsActivity extends AppCompatActivity implements PopupMenu.OnM
         layout.setOrientation(LinearLayout.VERTICAL);
         layout.setPadding(10, 10, 10, 10);
         final EditText editText = new EditText(this);
-        editText.setHint("Enter" + key);
+        editText.setHint("Enter " + key);
         layout.addView(editText);
         builder.setView(layout);
 
-        builder.setPositiveButton("Update", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton("Update ", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 final String value = editText.getText().toString().trim();
@@ -218,7 +219,7 @@ public class SettingsActivity extends AppCompatActivity implements PopupMenu.OnM
                             Toast.makeText(SettingsActivity.this, "Unable to update", Toast.LENGTH_LONG).show();
                         }
                     });
-                    if (key.equals("name")) {
+                    if (key.equals("email")) {
                         final DatabaseReference databaser = FirebaseDatabase.getInstance().getReference("Posts");
                         Query query = databaser.orderByChild("uid").equalTo(uid);
                         query.addValueEventListener(new ValueEventListener() {
@@ -226,7 +227,7 @@ public class SettingsActivity extends AppCompatActivity implements PopupMenu.OnM
                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                 for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
                                     String child = databaser.getKey();
-                                    dataSnapshot1.getRef().child("uname").setValue(value);
+                                    dataSnapshot1.getRef().child("email").setValue(value);
                                 }
                             }
 

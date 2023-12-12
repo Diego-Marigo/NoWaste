@@ -27,7 +27,7 @@ public class ProfileActivity extends AppCompatActivity implements PopupMenu.OnMe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
-        mUsername = findViewById(R.id.username);
+        mUsername = findViewById(R.id.emailAddress);
         mEmail = findViewById(R.id.email);
         profilePic = findViewById(R.id.profile_picture);
         user = FirebaseAuth.getInstance().getCurrentUser();
@@ -54,6 +54,13 @@ public class ProfileActivity extends AppCompatActivity implements PopupMenu.OnMe
                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                 startActivity(intent);
                 finish();
+            }
+        });
+
+        alertBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // TODO aprire pagina in cui si vedono tutte le notifiche delle scadenze - ancora da creare
             }
         });
     }

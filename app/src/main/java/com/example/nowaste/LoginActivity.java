@@ -21,12 +21,11 @@ import com.google.firebase.auth.FirebaseUser;
 public class LoginActivity extends AppCompatActivity {
     /*
     gli utenti sono
-    test@email.com, test2@email.com e test3@email.com con psw 123456
+    test5@email.com con psw 123456
 
-    TODO salvare informnazioni utente nel db
      */
 
-    EditText mUsername;
+    EditText mEmail;
     EditText mPassword;
     Button mLoginBtn;
     Button mRegisterBtn;
@@ -53,7 +52,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        mUsername = findViewById(R.id.username);
+        mEmail = findViewById(R.id.emailAddress);
         mPassword = findViewById(R.id.password);
         mLoginBtn = findViewById(R.id.loginBtn);
         mRegisterBtn = findViewById(R.id.registerBtn);
@@ -72,18 +71,18 @@ public class LoginActivity extends AppCompatActivity {
         mLoginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                final String username = mUsername.getText().toString();
+                final String email = mEmail.getText().toString();
                 String password = mPassword.getText().toString().trim();
 
-                if(TextUtils.isEmpty(username)) {
-                    mUsername.setError("Username is required");
+                if(TextUtils.isEmpty(email)) {
+                    mEmail.setError("Email is required");
                     return;
                 }
                 if(TextUtils.isEmpty(password)) {
                     mPassword.setError("Password is required");
                     return;
                 }
-                mAuth.signInWithEmailAndPassword(username, password)
+                mAuth.signInWithEmailAndPassword(email, password)
                         .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {

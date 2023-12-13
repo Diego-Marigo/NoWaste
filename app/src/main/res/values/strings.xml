@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">NoWaste</string>
+
+    <!-- <string name="facebook_app_id">1108081206859815</string>
+    <string name="fb_login_protocol_scheme">fb1108081206859815</string>
+   <string name="facebook_client_token">6c497cd71cbaa7202be25e8e432be34a</string>
+-->
 </resources>

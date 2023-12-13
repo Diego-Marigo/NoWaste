@@ -1,24 +1,28 @@
 package com.example.nowaste;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
 import android.content.Intent;
+import android.widget.Button;
 import android.widget.Toast;
 
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.FacebookSdk;
+import com.facebook.login.LoginManager;
+import com.facebook.login.LoginResult;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -26,20 +30,19 @@ import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.auth.GoogleAuthCredential;
 import com.google.firebase.auth.GoogleAuthProvider;
-import com.google.firebase.database.FirebaseDatabase;
-
-import java.util.HashMap;
-import java.util.Objects;
 
 public class LoginProviderActivity extends AppCompatActivity {
 
-    SignInButton signInButton;
+    SignInButton googleSignInButton;
+    Button facebookSignInButton;
+    Button backToLoginButton;
     private static final int RC_SIGN_IN = 9001;
     private GoogleSignInClient mSignInClient;
     FirebaseAuth mAuth;
     private static final String TAG = "GOOGLE_SIGN_IN_TAG";
+
+    CallbackManager callbackManager;
 
     //FirebaseDatabase database;
     //https://www.geeksforgeeks.org/google-signing-using-firebase-authentication-in-android-using-java/
@@ -61,38 +64,75 @@ public class LoginProviderActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // FacebookSdk.sdkInitialize(getApplicationContext());
         setContentView(R.layout.activity_login_provider);
 
+        /*
+        // per facebook login
+        callbackManager = CallbackManager.Factory.create();
+
+        LoginManager.getInstance().registerCallback(callbackManager,
+                new FacebookCallback<LoginResult>() {
+                    @Override
+                    public void onSuccess(LoginResult loginResult) {
+                        // App code
+                    }
+
+                    @Override
+                    public void onCancel() {
+                        // App code
+                    }
+
+                    @Override
+                    public void onError(FacebookException exception) {
+                        // App code
+                    }
+                });
+*/
         //database = FirebaseDatabase.getInstance();
 
         GoogleSignInOptions options = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken(getString(com.firebase.ui.auth.R.string.default_web_client_id))
-                //.requestIdToken("625365294441-3oe0jpfr35i14pobsqhmovdvsm1heomu.apps.googleusercontent.com") // preso da google-services.json
+                //.requestIdToken(getString(com.firebase.ui.auth.R.string.default_web_client_id))
+                .requestIdToken("625365294441-3oe0jpfr35i14pobsqhmovdvsm1heomu.apps.googleusercontent.com") // preso da google-services.json
                 .requestEmail().build();
 
         mSignInClient = GoogleSignIn.getClient(this, options);
         mAuth = FirebaseAuth.getInstance();
-        signInButton = findViewById(R.id.google_sign_in_button);
+        googleSignInButton = findViewById(R.id.google_sign_in_button);
+        //facebookSignInButton = findViewById(R.id.facebook_login_button);
+        backToLoginButton = findViewById(R.id.login_btn);
 
-        signInButton.setOnClickListener(new View.OnClickListener() {
+        backToLoginButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+
+        googleSignInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Log.d(TAG, "onClick: begin Google signin");
                 Intent intent = mSignInClient.getSignInIntent();
                 startActivityForResult(intent, RC_SIGN_IN);
-                //googleSignIn();
             }
         });
-    }
 
-    private void googleSignIn() {
-        Intent intent = mSignInClient.getSignInIntent();
-        startActivityForResult(intent, RC_SIGN_IN);
+        /*facebookSignInButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });*/
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        //callbackManager.onActivityResult(requestCode, resultCode, data); // facebook login
         super.onActivityResult(requestCode, resultCode, data);
+
         if(requestCode == RC_SIGN_IN){
             Log.d(TAG, "onActivityResult: Google signin intent result");
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
@@ -100,7 +140,6 @@ public class LoginProviderActivity extends AppCompatActivity {
                 GoogleSignInAccount account = task.getResult(ApiException.class);
                 firebaseAuthWithGoogleAccount(account);
             } catch (Exception e){
-                // entro qui e il login non va a buon fine
                 Log.d(TAG, "onActivityResult: " + e.getMessage());
             }
             }
@@ -135,6 +174,5 @@ public class LoginProviderActivity extends AppCompatActivity {
                 Log.d(TAG, "onFailure: login failed " + e.getMessage());
             }
         });
-
     }
 }

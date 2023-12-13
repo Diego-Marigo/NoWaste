@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "625365294441",
+    "firebase_url": "https://nowaste-5e067-default-rtdb.firebaseio.com",
     "project_id": "nowaste-5e067",
     "storage_bucket": "nowaste-5e067.appspot.com"
   },
@@ -9,68 +10,18 @@
       "client_info": {
         "mobilesdk_app_id": "1:625365294441:android:97faf2583ee8e8eb50f1f8",
         "android_client_info": {
-          "package_name": "com.android.application"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "625365294441-3oe0jpfr35i14pobsqhmovdvsm1heomu.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyA80747xihAJ5HOLkTVn9VifU3M2GDDmYw"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "625365294441-3oe0jpfr35i14pobsqhmovdvsm1heomu.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:625365294441:android:9082b601ecde4b8650f1f8",
-        "android_client_info": {
           "package_name": "com.example.nowaste"
         }
       },
       "oauth_client": [
         {
-          "client_id": "625365294441-3oe0jpfr35i14pobsqhmovdvsm1heomu.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyA80747xihAJ5HOLkTVn9VifU3M2GDDmYw"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "625365294441-3oe0jpfr35i14pobsqhmovdvsm1heomu.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:625365294441:android:81457f3cb377e89750f1f8",
-        "android_client_info": {
-          "package_name": "com.example.test"
-        }
-      },
-      "oauth_client": [
+          "client_id": "625365294441-6v8d13i720d6qbonebqdpj83dn19srap.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.nowaste",
+            "certificate_hash": "27de045a7daf6661047c50cfa1386be4adda8157"
+          }
+        },
         {
           "client_id": "625365294441-3oe0jpfr35i14pobsqhmovdvsm1heomu.apps.googleusercontent.com",
           "client_type": 3

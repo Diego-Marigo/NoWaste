@@ -24,7 +24,7 @@ import com.google.firebase.database.IgnoreExtraProperties;
 
 /**
  * RegistrationActivity:
- * Activity che si occupa della registrazione di un nuovo utente
+ * Activity che si occupa della registrazione di un nuovo utente.
  *
  * @author martinaragusa
  * @since 1.0
@@ -32,7 +32,7 @@ import com.google.firebase.database.IgnoreExtraProperties;
 public class RegistrationActivity extends AppCompatActivity {
 
     /**
-     * Elementi UI della pagina
+     * Elementi UI della pagina.
      */
     EditText mUsername;
     EditText mEmail, mPassword;
@@ -44,7 +44,7 @@ public class RegistrationActivity extends AppCompatActivity {
 
     /**
      * Metodo chiamato all'avvio dell'applicazione.
-     * Controlla se l'utente è già autenticato e, in caso affermativo, apre la pagina principale
+     * Controlla se l'utente è già autenticato e, in caso affermativo, apre la pagina principale.
      */
     @Override
     public void onStart() {
@@ -59,7 +59,7 @@ public class RegistrationActivity extends AppCompatActivity {
     }
 
     /**
-     * Metodo chiamato all'avvio dell'activity
+     * Metodo chiamato all'avvio dell'activity.
      *
      * @param savedInstanceState Oggetto che contiene dati forniti in precedenza in onSaveInstanceState
      */
@@ -136,20 +136,20 @@ public class RegistrationActivity extends AppCompatActivity {
     }
 
     /**
-     * Classe che rappresenta un utente all'interno del database
+     * Classe che rappresenta un utente all'interno del database.
      */
     @IgnoreExtraProperties
     public class User {
         public String username, email;
 
         /**
-         * Costruttore vuoto
+         * Costruttore vuoto.
          */
         public User() {
         }
 
         /**
-         * Costruttore per la creazione di un oggetto di tipo Utente
+         * Costruttore per la creazione di un oggetto di tipo Utente.
          * @param username Username dell'utente
          * @param email Indirizzo email dell'utente
          */
@@ -160,7 +160,7 @@ public class RegistrationActivity extends AppCompatActivity {
     }
 
     /**
-     * Metodo che scrive un nuovo utente all'interno del database Firebase
+     * Metodo che scrive un nuovo utente all'interno del database Firebase.
      * @param userId ID univoco dell'utente
      * @param username Username dell'utente
      * @param email Indirizzo email dell'utente

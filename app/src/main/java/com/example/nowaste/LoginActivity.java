@@ -20,7 +20,7 @@ import com.google.firebase.auth.FirebaseUser;
 
 /**
  * LoginActivity:
- * Activity per l'accesso di un utente già registrato
+ * Activity per l'accesso di un utente già registrato.
  *
  * @author martinaragusa
  * @since 1.0
@@ -44,7 +44,7 @@ public class LoginActivity extends AppCompatActivity {
 
     /**
      * Metodo chiamato all'avvio dell'applicazione.
-     * Controlla se l'utente è già autenticato e, in caso affermativo, apre la pagina principale
+     * Controlla se l'utente è già autenticato e, in caso affermativo, apre la pagina principale.
      */
     @Override
     public void onStart() {
@@ -61,7 +61,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     /**
-     * Metodo chiamato all'avvio dell'activity
+     * Metodo chiamato all'avvio dell'activity.
      *
      * @param savedInstanceState Oggetto che contiene dati forniti in precedenza in onSaveInstanceState
      */

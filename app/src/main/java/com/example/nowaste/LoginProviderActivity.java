@@ -32,6 +32,9 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 
+/**
+ * Activity per l'autenticazione tramite provider esterni come Google e Facebook.
+ */
 public class LoginProviderActivity extends AppCompatActivity {
 
     SignInButton googleSignInButton;
@@ -47,10 +50,13 @@ public class LoginProviderActivity extends AppCompatActivity {
     //FirebaseDatabase database;
     //https://www.geeksforgeeks.org/google-signing-using-firebase-authentication-in-android-using-java/
 
+    /**
+     * Metodo chiamato all'avvio dell'applicazione.
+     * Controlla se l'utente è già autenticato e, in caso affermativo, apre la pagina principale.
+     */
     @Override
     public void onStart() {
         super.onStart();
-        // Check if user is signed in (non-null) and update UI accordingly.
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if(currentUser != null){
@@ -61,6 +67,11 @@ public class LoginProviderActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Metodo chiamato all'avvio dell'activity.
+     *
+     * @param savedInstanceState Oggetto che contiene dati forniti in precedenza in onSaveInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -128,6 +139,12 @@ public class LoginProviderActivity extends AppCompatActivity {
         });*/
     }
 
+    /**
+     *
+     * @param requestCode Codice della richiesta
+     * @param resultCode Codice del risultato
+     * @param data Intent contenente i dati restituiti
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         //callbackManager.onActivityResult(requestCode, resultCode, data); // facebook login
@@ -142,9 +159,13 @@ public class LoginProviderActivity extends AppCompatActivity {
             } catch (Exception e){
                 Log.d(TAG, "onActivityResult: " + e.getMessage());
             }
-            }
         }
+    }
 
+    /**
+     * Metodo per l'autenticazione tramite un account Google.
+     * @param account Account Google ottenuto dall'intent di accesso con Google
+     */
     private void firebaseAuthWithGoogleAccount(GoogleSignInAccount account) {
         Log.d(TAG, "firebaseAuthWithGoogleAccount: begin firebase auth with google account");
         AuthCredential credential = GoogleAuthProvider.getCredential(account.getIdToken(), null);

@@ -8,7 +8,7 @@ import android.os.Handler;
 
 /**
  * SplashScreen:
- * Activity per la schermata di caricamento iniziale in cui viene visualizzato il logo dell'app
+ * Activity per la schermata di caricamento iniziale in cui viene visualizzato il logo dell'app.
  *
  * @author martinaragusa
  * @since 1.0

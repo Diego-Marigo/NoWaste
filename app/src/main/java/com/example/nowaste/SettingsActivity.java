@@ -59,7 +59,7 @@ public class SettingsActivity extends AppCompatActivity implements PopupMenu.OnM
     ProgressDialog pd;
 
     /**
-     * Metodo chiamato all'avvio dell'activity
+     * Metodo chiamato all'avvio dell'activity.
      *
      * @param savedInstanceState Oggetto che contiene dati forniti in precedenza in onSaveInstanceState
      */
@@ -108,7 +108,7 @@ public class SettingsActivity extends AppCompatActivity implements PopupMenu.OnM
     }
 
     /**
-     * Metodo che gestisce i click sugli elementi del menu
+     * Metodo che gestisce i click sugli elementi del menu.
      *
      * @param menuItem Elemento del menu selezionato
      * @return True se l'evento è stato gestito, False altrimenti
@@ -136,7 +136,7 @@ public class SettingsActivity extends AppCompatActivity implements PopupMenu.OnM
     }
 
     /**
-     * Metodo che mostra una finestra di dialogo per la modifica della password
+     * Metodo che mostra una finestra di dialogo per la modifica della password.
      */
     // TODO controllare che la password venga effettivamente modificata
     private void showPasswordChangeDailog() {
@@ -169,7 +169,7 @@ public class SettingsActivity extends AppCompatActivity implements PopupMenu.OnM
 
     /**
      * Metodo per modificare la password salvata.
-     * Controlla se la vecchia password è stata inserita correttamente e, in caso affermativo, la aggiorna con quella nuova
+     * Controlla se la vecchia password è stata inserita correttamente e, in caso affermativo, la aggiorna con quella nuova.
      * @param oldp Vecchia password salvata
      * @param newp Nuova password
      */
@@ -206,7 +206,7 @@ public class SettingsActivity extends AppCompatActivity implements PopupMenu.OnM
     }
 
     /**
-     * Metodo che aggiorna l'indirizzo email
+     * Metodo che aggiorna l'indirizzo email.
      * @param key
      */
     // TODO sistemare metodo - non viene fatta l'update dell'indirizzo email

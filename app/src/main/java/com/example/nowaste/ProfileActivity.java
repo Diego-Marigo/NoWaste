@@ -24,7 +24,7 @@ import com.google.firebase.auth.FirebaseUser;
  */
 public class ProfileActivity extends AppCompatActivity implements PopupMenu.OnMenuItemClickListener {
     /**
-     * Elementi UI della pagina e user attualmente autenticato
+     * Elementi UI della pagina e user attualmente autenticato.
      */
     private TextView mUsername;
     private TextView mEmail;
@@ -33,7 +33,7 @@ public class ProfileActivity extends AppCompatActivity implements PopupMenu.OnMe
     private ImageButton settingsBtn, alertBtn, listsBtn;
 
     /**
-     * Metodo onCreate chiamato all'avvio dell'activity
+     * Metodo onCreate chiamato all'avvio dell'activity.
      *
      * @param savedInstanceState Oggetto che contiene dati forniti in precedenza in onSaveInstanceState
      */
@@ -81,7 +81,7 @@ public class ProfileActivity extends AppCompatActivity implements PopupMenu.OnMe
     }
 
     /**
-     * Metodo che gestisce i click sugli elementi del menu
+     * Metodo che gestisce i click sugli elementi del menu.
      *
      * @param item Elemento del menu selezionato
      * @return True se l'evento è stato gestito, False altrimenti

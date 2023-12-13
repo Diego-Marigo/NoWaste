@@ -6,7 +6,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 
-// schermata di caricamento iniziale
+/**
+ * SplashScreen:
+ * Activity per la schermata di caricamento iniziale in cui viene visualizzato il logo dell'app
+ *
+ * @author martinaragusa
+ * @since 1.0
+ */
 public class SplashScreen extends AppCompatActivity {
 
     @Override

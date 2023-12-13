@@ -12,6 +12,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+/**
+ * MainActivity:
+ * Activity che costituisce la pagina principale dell'applicazione.
+ * Qui sono visualizzate le liste degli alimenti.
+ */
 public class MainActivity extends AppCompatActivity {
     /*
     schermata iniziale in cui si vedono le liste

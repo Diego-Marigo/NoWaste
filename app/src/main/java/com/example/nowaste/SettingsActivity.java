@@ -37,6 +37,14 @@ import com.google.firebase.storage.StorageReference;
 
 import java.util.HashMap;
 
+/**
+ * SettingsActivity:
+ * Activity per le impostazioni: qui è possibile modificare le informazioni del proprio profilo
+ * e la frequenza della ricezione delle notifiche riguardo la scadenza degli alimenti.
+ *
+ * @author martinaragusa
+ * @since 1.0
+ */
 public class SettingsActivity extends AppCompatActivity implements PopupMenu.OnMenuItemClickListener{
 
     private FirebaseAuth firebaseAuth;
@@ -50,6 +58,11 @@ public class SettingsActivity extends AppCompatActivity implements PopupMenu.OnM
     Button daysBeforeBtn;
     ProgressDialog pd;
 
+    /**
+     * Metodo chiamato all'avvio dell'activity
+     *
+     * @param savedInstanceState Oggetto che contiene dati forniti in precedenza in onSaveInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -94,6 +107,12 @@ public class SettingsActivity extends AppCompatActivity implements PopupMenu.OnM
         });
     }
 
+    /**
+     * Metodo che gestisce i click sugli elementi del menu
+     *
+     * @param menuItem Elemento del menu selezionato
+     * @return True se l'evento è stato gestito, False altrimenti
+     */
     @Override
     public boolean onMenuItemClick(MenuItem menuItem) {
         // TODO bisogna settare che in base a ciò che si sceglie si riceverà la notifica
@@ -116,7 +135,10 @@ public class SettingsActivity extends AppCompatActivity implements PopupMenu.OnM
         return false;
     }
 
-    // We will show an alert box where we will write our old and new password
+    /**
+     * Metodo che mostra una finestra di dialogo per la modifica della password
+     */
+    // TODO controllare che la password venga effettivamente modificata
     private void showPasswordChangeDailog() {
         View view = LayoutInflater.from(this).inflate(R.layout.dialog_update_password, null);
         final EditText oldpass = view.findViewById(R.id.oldpasslog);
@@ -145,8 +167,12 @@ public class SettingsActivity extends AppCompatActivity implements PopupMenu.OnM
         });
     }
 
-    // Now we will check that if old password was authenticated
-    // correctly then we will update the new password
+    /**
+     * Metodo per modificare la password salvata.
+     * Controlla se la vecchia password è stata inserita correttamente e, in caso affermativo, la aggiorna con quella nuova
+     * @param oldp Vecchia password salvata
+     * @param newp Nuova password
+     */
     private void updatePassword(String oldp, final String newp) {
         pd.show();
         final FirebaseUser user = firebaseAuth.getCurrentUser();
@@ -179,7 +205,10 @@ public class SettingsActivity extends AppCompatActivity implements PopupMenu.OnM
                 });
     }
 
-    // Updating name
+    /**
+     * Metodo che aggiorna l'indirizzo email
+     * @param key
+     */
     // TODO sistemare metodo - non viene fatta l'update dell'indirizzo email
     private void showNamephoneupdate(final String key) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);

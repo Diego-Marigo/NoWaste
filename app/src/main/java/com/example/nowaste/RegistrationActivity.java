@@ -22,8 +22,18 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.IgnoreExtraProperties;
 
+/**
+ * RegistrationActivity:
+ * Activity che si occupa della registrazione di un nuovo utente
+ *
+ * @author martinaragusa
+ * @since 1.0
+ */
 public class RegistrationActivity extends AppCompatActivity {
 
+    /**
+     * Elementi UI della pagina
+     */
     EditText mUsername;
     EditText mEmail, mPassword;
     Button mRegisterBtn;
@@ -32,6 +42,10 @@ public class RegistrationActivity extends AppCompatActivity {
     FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
 
+    /**
+     * Metodo chiamato all'avvio dell'applicazione.
+     * Controlla se l'utente è già autenticato e, in caso affermativo, apre la pagina principale
+     */
     @Override
     public void onStart() {
         super.onStart();
@@ -44,6 +58,11 @@ public class RegistrationActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Metodo chiamato all'avvio dell'activity
+     *
+     * @param savedInstanceState Oggetto che contiene dati forniti in precedenza in onSaveInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -116,20 +135,36 @@ public class RegistrationActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Classe che rappresenta un utente all'interno del database
+     */
     @IgnoreExtraProperties
     public class User {
         public String username, email;
 
+        /**
+         * Costruttore vuoto
+         */
         public User() {
-            // Default constructor required for calls to DataSnapshot.getValue(User.class)
         }
 
+        /**
+         * Costruttore per la creazione di un oggetto di tipo Utente
+         * @param username Username dell'utente
+         * @param email Indirizzo email dell'utente
+         */
         public User(String username, String email) {
             this.username = username;
             this.email = email;
         }
     }
 
+    /**
+     * Metodo che scrive un nuovo utente all'interno del database Firebase
+     * @param userId ID univoco dell'utente
+     * @param username Username dell'utente
+     * @param email Indirizzo email dell'utente
+     */
     public void writeNewUser(String userId, String username, String email) {
         User user = new User(username, email);
 

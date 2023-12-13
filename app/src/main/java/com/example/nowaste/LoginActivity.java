@@ -18,13 +18,22 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+/**
+ * LoginActivity:
+ * Activity per l'accesso di un utente già registrato
+ *
+ * @author martinaragusa
+ * @since 1.0
+ */
 public class LoginActivity extends AppCompatActivity {
     /*
     gli utenti sono
     test5@email.com con psw 123456
 
      */
-
+    /**
+     * Elementi UI della pagina
+     */
     EditText mEmail;
     EditText mPassword;
     Button mLoginBtn;
@@ -33,6 +42,10 @@ public class LoginActivity extends AppCompatActivity {
     FirebaseAuth mAuth;
     Button mProviderLogin;
 
+    /**
+     * Metodo chiamato all'avvio dell'applicazione.
+     * Controlla se l'utente è già autenticato e, in caso affermativo, apre la pagina principale
+     */
     @Override
     public void onStart() {
         super.onStart();
@@ -47,6 +60,11 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Metodo chiamato all'avvio dell'activity
+     *
+     * @param savedInstanceState Oggetto che contiene dati forniti in precedenza in onSaveInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

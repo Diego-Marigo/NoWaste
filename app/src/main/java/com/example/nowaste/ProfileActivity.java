@@ -14,14 +14,29 @@ import android.widget.TextView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+/**
+ * ProfileActivity:
+ * Activity per la pagina del profilo.
+ * Questa classe contiene tutti i metodi che sono utilizzati all'interno della pagina del profilo.
+ *
+ * @author martinaragusa
+ * @since 1.0
+ */
 public class ProfileActivity extends AppCompatActivity implements PopupMenu.OnMenuItemClickListener {
-    // pagina del profilo
+    /**
+     * Elementi UI della pagina e user attualmente autenticato
+     */
     private TextView mUsername;
     private TextView mEmail;
     private ImageView profilePic;
     FirebaseUser user;
     private ImageButton settingsBtn, alertBtn, listsBtn;
 
+    /**
+     * Metodo onCreate chiamato all'avvio dell'activity
+     *
+     * @param savedInstanceState Oggetto che contiene dati forniti in precedenza in onSaveInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,6 +80,12 @@ public class ProfileActivity extends AppCompatActivity implements PopupMenu.OnMe
         });
     }
 
+    /**
+     * Metodo che gestisce i click sugli elementi del menu
+     *
+     * @param item Elemento del menu selezionato
+     * @return True se l'evento è stato gestito, False altrimenti
+     */
     @Override
     public boolean onMenuItemClick(MenuItem item) {
         if(item.getItemId() == R.id.settings) {

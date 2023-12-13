@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -25,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
     FirebaseUser user;
     TextView textView;
     Button logout;
-    ImageButton profileButton;
+    private BottomNavigationView bottomNavigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +37,6 @@ public class MainActivity extends AppCompatActivity {
         user = auth.getCurrentUser();
         logout = findViewById(R.id.logoutBtn);
         textView = findViewById(R.id.user_details);
-        profileButton = findViewById(R.id.profile_icon);
 
         if(user == null) {
             Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
@@ -46,20 +46,23 @@ public class MainActivity extends AppCompatActivity {
             textView.setText(user.getEmail());
         }
 
+        bottomNavigationView = findViewById(R.id.bottomNavigationView);
+        bottomNavigationView.setSelectedItemId(R.id.home);
+
+        bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
+            if(item.getItemId() == R.id.profile){
+                Intent intent = new Intent(getApplicationContext(), ProfileActivity.class);
+                startActivity(intent);
+                finish();
+            }
+            return true;
+        });
+
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 FirebaseAuth.getInstance().signOut();
                 Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-                startActivity(intent);
-                finish();
-            }
-        });
-
-        profileButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), ProfileActivity.class);
                 startActivity(intent);
                 finish();
             }

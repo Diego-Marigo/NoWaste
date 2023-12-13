@@ -2,6 +2,7 @@ package com.example.nowaste;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
@@ -22,6 +23,7 @@ import androidx.annotation.NonNull;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
@@ -57,6 +59,7 @@ public class SettingsActivity extends AppCompatActivity implements PopupMenu.OnM
     TextView editEmail, editPassword;
     Button daysBeforeBtn;
     ProgressDialog pd;
+    private BottomNavigationView bottomNavigationView;
 
     /**
      * Metodo chiamato all'avvio dell'activity.
@@ -78,7 +81,24 @@ public class SettingsActivity extends AppCompatActivity implements PopupMenu.OnM
         firebaseUser = firebaseAuth.getCurrentUser();
         firebaseDatabase = FirebaseDatabase.getInstance();
         storageReference = FirebaseStorage.getInstance().getReference();
-        databaseReference = firebaseDatabase.getReference("Users");
+        databaseReference = firebaseDatabase.getReference("users");
+
+        bottomNavigationView = findViewById(R.id.bottomNavigationView);
+        //mettere che nessuno dei due sia selezionato
+        bottomNavigationView.setSelectedItemId(R.id.invisible);
+
+        bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
+            if(item.getItemId() == R.id.profile){
+                Intent intent = new Intent(getApplicationContext(), ProfileActivity.class);
+                startActivity(intent);
+                finish();
+            } else if (item.getItemId() == R.id.home) {
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(intent);
+                finish();
+            }
+            return true;
+        });
 
         editPassword.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -210,9 +230,10 @@ public class SettingsActivity extends AppCompatActivity implements PopupMenu.OnM
      * @param key
      */
     // TODO sistemare metodo - non viene fatta l'update dell'indirizzo email
+    // l'email viene aggiunta nuova - bisogna recuperare l'id / username e modificare l'email
     private void showNamephoneupdate(final String key) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Update" + key);
+        builder.setTitle("Update " + key);
 
         // creating a layout to write the new name
         LinearLayout layout = new LinearLayout(this);

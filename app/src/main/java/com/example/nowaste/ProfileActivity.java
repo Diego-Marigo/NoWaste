@@ -1,5 +1,6 @@
 package com.example.nowaste;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -10,9 +11,16 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 /**
  * ProfileActivity:
@@ -29,8 +37,10 @@ public class ProfileActivity extends AppCompatActivity implements PopupMenu.OnMe
     private TextView mUsername;
     private TextView mEmail;
     private ImageView profilePic;
+    private BottomNavigationView bottomNavigationView;
     FirebaseUser user;
     private ImageButton settingsBtn, alertBtn, listsBtn;
+    private DatabaseReference mDatabase;
 
     /**
      * Metodo onCreate chiamato all'avvio dell'activity.
@@ -49,8 +59,33 @@ public class ProfileActivity extends AppCompatActivity implements PopupMenu.OnMe
         settingsBtn = findViewById(R.id.settings_icon);
         alertBtn = findViewById(R.id.alert_icon);
         listsBtn = findViewById(R.id.lists_icon);
+        bottomNavigationView = findViewById(R.id.bottomNavigationView);
+        bottomNavigationView.setSelectedItemId(R.id.profile);
 
-        mUsername.setText(user.getUid()); // cambiare con username, bisogna salvarlo quando si fa l'accesso
+        bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
+            if(item.getItemId() == R.id.home){
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(intent);
+                finish();
+            }
+            return true;
+        });
+
+        mDatabase = FirebaseDatabase.getInstance().getReference("users");
+        /*mDatabase.child(user.getUid()).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DataSnapshot> task) {
+                if (!task.isSuccessful()) {
+                    Toast.makeText(ProfileActivity.this, "Failed.",
+                            Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    mUsername.setText(String.valueOf(task.getResult().getValue()));
+                }
+            }
+        });*/
+
+        mUsername.setText(user.getDisplayName()); // cambiare con username, bisogna salvarlo quando si fa l'accesso
         mEmail.setText(user.getEmail());
 
         settingsBtn.setOnClickListener(new View.OnClickListener() {

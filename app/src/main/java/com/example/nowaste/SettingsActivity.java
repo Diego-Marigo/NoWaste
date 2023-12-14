@@ -37,6 +37,8 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 
 /**
@@ -159,8 +161,6 @@ public class SettingsActivity extends AppCompatActivity implements PopupMenu.OnM
     /**
      * Metodo che mostra una finestra di dialogo per la modifica della password.
      */
-    // TODO controllare che la password venga effettivamente modificata
-    // la password non viene salvata nel db, dovremmo farlo ? sarebbe tipo da criptare in qualche modo nel caso
     private void showPasswordChangeDailog() {
         View view = LayoutInflater.from(this).inflate(R.layout.dialog_update_password, null);
         final EditText oldpass = view.findViewById(R.id.oldpasslog);
@@ -203,12 +203,29 @@ public class SettingsActivity extends AppCompatActivity implements PopupMenu.OnM
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-                        user.updatePassword(newp)
+                        user.updatePassword(doHashing(newp))
                                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override
                                     public void onSuccess(Void aVoid) {
-                                        pd.dismiss();
-                                        Toast.makeText(SettingsActivity.this, "Password changed correctly", Toast.LENGTH_LONG).show();
+                                        // cambiare password nel db
+                                        HashMap<String, Object> result = new HashMap<>();
+                                        result.put("password", doHashing(newp));
+
+                                        databaseReference.child(firebaseUser.getUid()).updateChildren(result).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                            @Override
+                                            public void onSuccess(Void aVoid) {
+                                                pd.dismiss();
+
+                                                // field updated correctly
+                                                Toast.makeText(SettingsActivity.this, "Password changed correctly", Toast.LENGTH_LONG).show();
+                                            }
+                                        }).addOnFailureListener(new OnFailureListener() {
+                                            @Override
+                                            public void onFailure(@NonNull Exception e) {
+                                                pd.dismiss();
+                                                Toast.makeText(SettingsActivity.this, "Unable to update", Toast.LENGTH_LONG).show();
+                                            }
+                                        });
                                     }
                                 }).addOnFailureListener(new OnFailureListener() {
                                     @Override
@@ -299,5 +316,30 @@ public class SettingsActivity extends AppCompatActivity implements PopupMenu.OnM
             }
         });
         builder.create().show();
+    }
+
+    /**
+     * Calcola l'hash MD5 della password per salvarla nel database.
+     *
+     * @param password password di cui fare l'hash
+     * @return stringa rappresentante l'hash MD5 della password in input
+     * @throws NoSuchAlgorithmException
+     */
+    public static String doHashing(String password) {
+        try {
+            MessageDigest messageDigest = MessageDigest.getInstance("MD5");
+            messageDigest.update(password.getBytes());
+
+            byte[] result = messageDigest.digest();
+            StringBuilder str = new StringBuilder();
+
+            for(Byte b : result) {
+                str.append(String.format("%02x", b));
+            }
+
+            return str.toString();
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

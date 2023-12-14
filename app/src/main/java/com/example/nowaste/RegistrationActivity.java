@@ -22,6 +22,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.IgnoreExtraProperties;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+
 /**
  * RegistrationActivity:
  * Activity che si occupa della registrazione di un nuovo utente.
@@ -122,7 +125,8 @@ public class RegistrationActivity extends AppCompatActivity {
                                 if (task.isSuccessful()) {
                                     Toast.makeText(RegistrationActivity.this, "Account created.",
                                             Toast.LENGTH_SHORT).show();
-                                    writeNewUser(mAuth.getCurrentUser().getUid(), username, email);
+                                    String psw_to_save = doHashing(password);
+                                    writeNewUser(mAuth.getCurrentUser().getUid(), username, email, psw_to_save);
                                     Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
                                     startActivity(intent);
                                     finish();
@@ -142,7 +146,7 @@ public class RegistrationActivity extends AppCompatActivity {
      */
     @IgnoreExtraProperties
     public class User {
-        public String username, email;
+        public String username, email, password;
 
         /**
          * Costruttore vuoto.
@@ -155,9 +159,10 @@ public class RegistrationActivity extends AppCompatActivity {
          * @param username Username dell'utente
          * @param email Indirizzo email dell'utente
          */
-        public User(String username, String email) {
+        public User(String username, String email, String password) {
             this.username = username;
             this.email = email;
+            this.password = password;
         }
     }
 
@@ -167,9 +172,34 @@ public class RegistrationActivity extends AppCompatActivity {
      * @param username Username dell'utente
      * @param email Indirizzo email dell'utente
      */
-    public void writeNewUser(String userId, String username, String email) {
-        User user = new User(username, email);
+    public void writeNewUser(String userId, String username, String email, String password) {
+        User user = new User(username, email, password);
 
         mDatabase.child("users").child(userId).setValue(user);
+    }
+
+    /**
+     * Calcola l'hash MD5 della password per salvarla nel database.
+     *
+     * @param password password di cui fare l'hash
+     * @return stringa rappresentante l'hash MD5 della password in input
+     * @throws NoSuchAlgorithmException
+     */
+    public static String doHashing(String password) {
+        try {
+            MessageDigest messageDigest = MessageDigest.getInstance("MD5");
+            messageDigest.update(password.getBytes());
+
+            byte[] result = messageDigest.digest();
+            StringBuilder str = new StringBuilder();
+
+            for(Byte b : result) {
+                str.append(String.format("%02x", b));
+            }
+
+            return str.toString();
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

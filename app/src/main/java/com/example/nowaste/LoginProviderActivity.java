@@ -78,6 +78,9 @@ public class LoginProviderActivity extends AppCompatActivity {
         // FacebookSdk.sdkInitialize(getApplicationContext());
         setContentView(R.layout.activity_login_provider);
 
+        // nascondo la barra in alto
+        getSupportActionBar().hide();
+
         /*
         // per facebook login
         callbackManager = CallbackManager.Factory.create();

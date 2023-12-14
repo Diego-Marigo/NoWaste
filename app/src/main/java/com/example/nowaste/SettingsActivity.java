@@ -56,7 +56,7 @@ public class SettingsActivity extends AppCompatActivity implements PopupMenu.OnM
     StorageReference storageReference;
     String uid;
     ImageView set;
-    TextView editEmail, editPassword;
+    TextView editUsername, editPassword;
     Button daysBeforeBtn;
     ProgressDialog pd;
     private BottomNavigationView bottomNavigationView;
@@ -71,7 +71,7 @@ public class SettingsActivity extends AppCompatActivity implements PopupMenu.OnM
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
 
-        editEmail = findViewById(R.id.edit_email);
+        editUsername = findViewById(R.id.edit_username);
         set = findViewById(R.id.setting_profile_image);
         pd = new ProgressDialog(this);
         pd.setCanceledOnTouchOutside(false);
@@ -108,11 +108,11 @@ public class SettingsActivity extends AppCompatActivity implements PopupMenu.OnM
             }
         });
 
-        editEmail.setOnClickListener(new View.OnClickListener() {
+        editUsername.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                pd.setMessage("Updating Email");
-                showNamephoneupdate("email");
+                pd.setMessage("Updating Username");
+                editUsername("username");
             }
         });
 
@@ -136,6 +136,7 @@ public class SettingsActivity extends AppCompatActivity implements PopupMenu.OnM
     @Override
     public boolean onMenuItemClick(MenuItem menuItem) {
         // TODO bisogna settare che in base a ciò che si sceglie si riceverà la notifica
+        // per ogni alimento immagino ci sia un campo che definisce la cadenza con cui si riceve la notifica - sarà da modificare quello
         if(menuItem.getItemId() == R.id.item1){
             daysBeforeBtn.setText(menuItem.getTitle());
             return true;
@@ -159,6 +160,7 @@ public class SettingsActivity extends AppCompatActivity implements PopupMenu.OnM
      * Metodo che mostra una finestra di dialogo per la modifica della password.
      */
     // TODO controllare che la password venga effettivamente modificata
+    // la password non viene salvata nel db, dovremmo farlo ? sarebbe tipo da criptare in qualche modo nel caso
     private void showPasswordChangeDailog() {
         View view = LayoutInflater.from(this).inflate(R.layout.dialog_update_password, null);
         final EditText oldpass = view.findViewById(R.id.oldpasslog);
@@ -229,9 +231,7 @@ public class SettingsActivity extends AppCompatActivity implements PopupMenu.OnM
      * Metodo che aggiorna l'indirizzo email.
      * @param key
      */
-    // TODO sistemare metodo - non viene fatta l'update dell'indirizzo email
-    // l'email viene aggiunta nuova - bisogna recuperare l'id / username e modificare l'email
-    private void showNamephoneupdate(final String key) {
+    private void editUsername(final String key) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Update " + key);
 
@@ -251,7 +251,6 @@ public class SettingsActivity extends AppCompatActivity implements PopupMenu.OnM
                 if (!TextUtils.isEmpty(value)) {
                     pd.show();
 
-                    // Here we are updating the new name
                     HashMap<String, Object> result = new HashMap<>();
                     result.put(key, value);
                     databaseReference.child(firebaseUser.getUid()).updateChildren(result).addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -259,8 +258,8 @@ public class SettingsActivity extends AppCompatActivity implements PopupMenu.OnM
                         public void onSuccess(Void aVoid) {
                             pd.dismiss();
 
-                            // after updated we will show updated
-                            Toast.makeText(SettingsActivity.this, " updated ", Toast.LENGTH_LONG).show();
+                            // field updated correctly
+                            Toast.makeText(SettingsActivity.this, key + " updated ", Toast.LENGTH_LONG).show();
                         }
                     }).addOnFailureListener(new OnFailureListener() {
                         @Override

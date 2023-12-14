@@ -49,13 +49,13 @@ tools:context=".SettingsActivity">
         android:layout_height="130dp"
         android:layout_marginBottom="44dp"
         android:src="@drawable/user_icon"
-        app:layout_constraintBottom_toTopOf="@+id/edit_email"
+        app:layout_constraintBottom_toTopOf="@+id/edit_username"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.494"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
-        android:id="@+id/edit_email"
+        android:id="@+id/edit_username"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="32dp"

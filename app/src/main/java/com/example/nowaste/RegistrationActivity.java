@@ -122,8 +122,7 @@ public class RegistrationActivity extends AppCompatActivity {
                                 if (task.isSuccessful()) {
                                     Toast.makeText(RegistrationActivity.this, "Account created.",
                                             Toast.LENGTH_SHORT).show();
-                                    // TODO cambiare userId, per ora gli passo username
-                                    writeNewUser(username, username, email);
+                                    writeNewUser(mAuth.getCurrentUser().getUid(), username, email);
                                     Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
                                     startActivity(intent);
                                     finish();

@@ -21,6 +21,8 @@ import com.google.firebase.auth.FirebaseUser;
 public class MainActivity extends AppCompatActivity {
     /*
     schermata iniziale in cui si vedono le liste
+
+    -> bisognerà creare tabella delle liste e tabella degli alimenti all'interno del db
      */
     FirebaseAuth auth;
     FirebaseUser user;

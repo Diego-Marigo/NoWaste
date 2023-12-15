@@ -52,7 +52,7 @@ public class ProfileActivity extends AppCompatActivity implements PopupMenu.OnMe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
-        mUsername = findViewById(R.id.emailAddress);
+        mUsername = findViewById(R.id.username);
         mEmail = findViewById(R.id.email);
         profilePic = findViewById(R.id.profile_picture);
         user = FirebaseAuth.getInstance().getCurrentUser();
@@ -84,8 +84,19 @@ public class ProfileActivity extends AppCompatActivity implements PopupMenu.OnMe
                 }
             }
         });*/
+/*
+        mUsername= mDatabase.child("users").child(user.getUid()).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DataSnapshot> task) {
+                if (!task.isSuccessful()) {
 
-        mUsername.setText(user.getDisplayName()); // cambiare con username, bisogna salvarlo quando si fa l'accesso
+                }
+                else {
+
+                }
+            }
+        });*/
+        mUsername.setText(user.getDisplayName()); // TODO cambiare con username, devo leggerlo dal db
         mEmail.setText(user.getEmail());
 
         settingsBtn.setOnClickListener(new View.OnClickListener() {

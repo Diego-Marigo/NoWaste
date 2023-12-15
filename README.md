@@ -11,4 +11,5 @@ Il progetto in questione si focalizza sullo sviluppo di un'applicazione Android 
 condivisa di una dispensa o frigorifero in ambienti condivisi come appartamenti o uffici;
 - Gestire le impostazioni dell'account e personalizzare le preferenze dell'applicazione, come la
 frequenza delle notifiche e la visualizzazione degli alimenti.
+
 Il progetto mira a sensibilizzare gli utenti sul problema dello spreco alimentare e a fornire uno strumento semplice ed efficace per gestire e consumare gli alimenti in modo responsabile, promuovendo così un impatto positivo sia a livello individuale che collettivo.

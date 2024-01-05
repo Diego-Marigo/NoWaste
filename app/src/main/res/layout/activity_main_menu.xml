@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="90dp"
+        android:paddingHorizontal="10dp"
+        android:orientation="horizontal">
+
+        <!-- Icona Utente, 1/7 dello spazio -->
+        <ImageView
+            android:id="@+id/user_icon"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:src="@drawable/user_icon"
+            android:contentDescription="@string/collegamento_alla_pagina_del_profilo_dell_utente" />
+
+        <!-- Spazio Vuoto, 4/7 dello spazio -->
+        <View
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="4" />
+
+        <!-- Icona Impostazioni, 1/7 dello spazio -->
+        <ImageView
+            android:id="@+id/settings_icon"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:src="@drawable/settings_icon"
+            android:contentDescription="@string/collegamento_alla_pagina_delle_impostazioni" />
+
+        <!-- Icona Ricerca, 1/7 dello spazio -->
+        <ImageView
+            android:id="@+id/search_icon"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:src="@drawable/baseline_search_24"
+            android:contentDescription="@string/avvio_del_metodo_di_ricerca" />
+
+    </LinearLayout>
+
+    <!-- Corpo della Schermata con LinearLayout -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:divider="?android:attr/dividerHorizontal"
+        android:showDividers="middle"
+        android:dividerPadding="24dp"> <!-- Padding aumentato -->
+
+        <!-- Importanti -->
+        <Button
+            android:id="@+id/btn_importanti"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/importanti"
+            android:background="#FFC0CB"
+            android:textSize="22sp"/>
+
+        <!-- Pianificazioni -->
+        <Button
+            android:id="@+id/btn_pianificazioni"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/pianificazioni"
+            android:background="#90EE90"
+            android:textSize="22sp" />
+
+        <!-- Cibi da Rimediare -->
+        <Button
+            android:id="@+id/btn_cibi_da_rimediare"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/cibi_da_rimediare"
+            android:background="#90EE90"
+            android:textSize="22sp" />
+
+        <!-- Cibi in Scadenza -->
+        <Button
+            android:id="@+id/btn_cibi_in_scadenza"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/cibi_in_scadenza"
+            android:background="#800080"
+            android:textSize="22sp" />
+
+        <!-- Cibi Scaduti -->
+        <Button
+            android:id="@+id/btn_cibi_scaduti"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/cibi_scaduti"
+            android:background="#800080"
+            android:textSize="22sp" />
+
+        <!-- Assegnati a Me -->
+        <Button
+            android:id="@+id/btn_assegnati_a_me"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/assegnati_a_me"
+            android:background="#D3D3D3"
+            android:textSize="22sp" />
+
+        <!-- Lista Default -->
+        <Button
+            android:id="@+id/btn_lista_default"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/lista_default"
+            android:background="#D3D3D3"
+            android:textSize="22sp" />
+    </LinearLayout>
+
+
+
+    <!-- Linea Separatrice -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:paddingVertical="5dp"
+            android:background="@android:color/darker_gray" />
+
+        <!-- Liste Personalizzate dell'Utente -->
+</LinearLayout>

@@ -20,8 +20,6 @@ public class SplashScreen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splashscreen);
 
-        // nascondo la barra in alto
-        getSupportActionBar().hide();
 
         /*
         handler per fare in modo che al lancio dell'applicazione

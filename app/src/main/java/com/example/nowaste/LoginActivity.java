@@ -88,8 +88,6 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        // nascondo la barra in alto
-        getSupportActionBar().hide();
 
         mEmail = findViewById(R.id.emailAddress);
         mPassword = findViewById(R.id.password);

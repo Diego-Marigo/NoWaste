@@ -112,7 +112,7 @@ public class ProfileActivity extends AppCompatActivity implements PopupMenu.OnMe
         listsBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                Intent intent = new Intent(getApplicationContext(), CustomListView.class);
                 startActivity(intent);
                 finish();
             }

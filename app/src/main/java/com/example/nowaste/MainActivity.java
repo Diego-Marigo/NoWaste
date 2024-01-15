@@ -1,14 +1,19 @@
 package com.example.nowaste;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -89,6 +94,15 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
                 popupMenu.show();
             }
         });
+
+        addListBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // mostro un pop up per aggiungere le info della lista
+                showAddListDailog();
+                // poi dovrà aggiungerla al db -> tipo quando schiaccerà fine (faccio dentro al metodo)
+            }
+        });
     }
 
     /**
@@ -150,6 +164,29 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
     public void writeNewList(String userId, String nomeLista) {
         MainActivity.Liste listaAlimenti = new MainActivity.Liste(nomeLista);
 
-        mDatabase.child("Liste").child(userId).setValue(user);
+        mDatabase.child("Liste").child(userId).setValue(listaAlimenti);
+    }
+
+    private void showAddListDailog() {
+        View view = LayoutInflater.from(this).inflate(R.layout.dialog_new_list, null);
+        final EditText nomeLista = view.findViewById(R.id.nomeListalog);
+        Button confirm = view.findViewById(R.id.confirm_button);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setView(view);
+        final AlertDialog dialog = builder.create();
+        dialog.show();
+        confirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String listName = nomeLista.getText().toString().trim();
+                if (TextUtils.isEmpty(listName)) {
+                    Toast.makeText(MainActivity.this, "List name can't be empty", Toast.LENGTH_LONG).show();
+                    return;
+                }
+                dialog.dismiss();
+                //creo la lista di alimenti
+                writeNewList(user.getUid(), listName);
+            }
+        });
     }
 }

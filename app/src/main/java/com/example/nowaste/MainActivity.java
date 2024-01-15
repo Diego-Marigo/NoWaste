@@ -101,6 +101,8 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
                 // mostro un pop up per aggiungere le info della lista
                 showAddListDailog();
                 // poi dovrà aggiungerla al db -> tipo quando schiaccerà fine (faccio dentro al metodo)
+                //TODO poi dovrà essere mostrata la lista nell'elenco
+                //credo quando avrà successo quindi OnSuccess() (?)
             }
         });
     }
@@ -134,11 +136,10 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
      */
     @IgnoreExtraProperties
     public class Liste {
-        //TODO cambiare gli attributi
         /*
         una lista avrà un nome e un id; poi avrà l'userid dell'utente che crea la lista
          */
-        public String nomeLista;
+        public String nomeLista, userId;
 
         /**
          * Costruttore vuoto.
@@ -150,8 +151,9 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
          * Costruttore per la creazione di un oggetto di tipo Utente.
          * @param nomeLista Nome della lista dell'utente
          */
-        public Liste(String nomeLista) {
+        public Liste(String nomeLista, String userId) {
             this.nomeLista = nomeLista;
+            this.userId = userId;
         }
     }
 
@@ -162,7 +164,7 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
      */
     // TODO questo succederà quando l'utente schiaccerà il pulsante + per creare una lista
     public void writeNewList(String userId, String nomeLista) {
-        MainActivity.Liste listaAlimenti = new MainActivity.Liste(nomeLista);
+        MainActivity.Liste listaAlimenti = new MainActivity.Liste(nomeLista, userId);
 
         mDatabase.child("Liste").child(userId).setValue(listaAlimenti);
     }

@@ -59,6 +59,7 @@
     <string name="nome_della_lista">Nome della Lista</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="menu_impostazioni">Menu impostazioni</string>
 
     <!-- <string name="facebook_app_id">1108081206859815</string>
     <string name="fb_login_protocol_scheme">fb1108081206859815</string>

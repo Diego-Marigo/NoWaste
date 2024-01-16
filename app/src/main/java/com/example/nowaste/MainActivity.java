@@ -52,8 +52,6 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
         mDatabase = FirebaseDatabase.getInstance().getReference();
 
         user = auth.getCurrentUser();
-        //logout = findViewById(R.id.logoutBtn);
-        //textView = findViewById(R.id.user_details);
         settingsBtn = findViewById(R.id.settings_icon);
         searchBtn = findViewById(R.id.search_icon);
         addListBtn = findViewById(R.id.addListBtn);
@@ -62,9 +60,7 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
             Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
             startActivity(intent);
             finish();
-        } /*else {
-            textView.setText(user.getEmail());
-        }*/
+        }
 
         bottomNavigationView = findViewById(R.id.bottomNavigationView);
         bottomNavigationView.setSelectedItemId(R.id.home);
@@ -98,9 +94,8 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
         addListBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // mostro un pop up per aggiungere le info della lista
-                showAddListDailog();
-                // poi dovrà aggiungerla al db -> tipo quando schiaccerà fine (faccio dentro al metodo)
+                // mostro un pop up per aggiungere il nome della lista
+                showAddListDailog(); // dentro qui poi verrà chiamato il metodo per aggiungerla al db
                 //TODO poi dovrà essere mostrata la lista nell'elenco
                 //credo quando avrà successo quindi OnSuccess() (?)
             }
@@ -158,17 +153,19 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
     }
 
     /**
-     * Metodo che scrive un nuovo utente all'interno del database Firebase.
+     * Metodo che scrive una nuova lista all'interno del database Firebase.
      * @param userId ID univoco dell'utente
      * @param nomeLista Nome della lista
      */
-    // TODO questo succederà quando l'utente schiaccerà il pulsante + per creare una lista
     public void writeNewList(String userId, String nomeLista) {
         MainActivity.Liste listaAlimenti = new MainActivity.Liste(nomeLista, userId);
 
         mDatabase.child("Liste").child(userId).setValue(listaAlimenti);
     }
 
+    /**
+     * Metodo che mostra una finestra di dialogo per la creazione di una nuova lista di alimenti.
+     */
     private void showAddListDailog() {
         View view = LayoutInflater.from(this).inflate(R.layout.dialog_new_list, null);
         final EditText nomeLista = view.findViewById(R.id.nomeListalog);
@@ -188,7 +185,14 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
                 dialog.dismiss();
                 //creo la lista di alimenti
                 writeNewList(user.getUid(), listName);
+                Toast.makeText(MainActivity.this, "Lista creata correttamente", Toast.LENGTH_SHORT).show();
+                // una volta che è stata creata dovrà essere visualizzata
             }
         });
     }
+
+    /*
+    dovrò avere un metodo che, quando faccio la onCreate della pagina MainActivity,
+     recupera dal db le liste dell'utente e le dovrà mostrare.
+     */
 }

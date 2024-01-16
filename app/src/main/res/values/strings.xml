@@ -44,12 +44,8 @@
         vestibulum. Fusce dictum libero quis erat maximus, vitae volutpat diam dignissim.
     </string>
     <string name="lista_default">Lista Default</string>
-    <string name="assegnati_a_me">Assegnati a Me</string>
-    <string name="cibi_scaduti">Cibi Scaduti</string>
-    <string name="cibi_in_scadenza">Cibi in Scadenza</string>
-    <string name="cibi_da_rimediare">Cibi da Rimediare</string>
-    <string name="pianificazioni">Pianificazioni</string>
-    <string name="importanti">Importanti</string>
+    <string name="alimenti_scaduti">Alimenti Scaduti</string>
+    <string name="alimenti_in_scadenza">Alimenti in Scadenza</string>
     <string name="collegamento_alla_pagina_del_profilo_dell_utente">Collegamento alla pagina del profilo dell\'utente</string>
     <string name="collegamento_alla_pagina_delle_impostazioni">Collegamento alla pagina delle impostazioni</string>
     <string name="avvio_del_metodo_di_ricerca">Avvio del metodo di ricerca</string>

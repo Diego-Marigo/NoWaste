@@ -51,48 +51,15 @@
     <!-- Corpo della Schermata con LinearLayout -->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="560dp"
+        android:layout_height="482dp"
         android:divider="?android:attr/dividerHorizontal"
         android:dividerPadding="24dp"
         android:orientation="vertical"
         android:padding="16dp"
         android:showDividers="middle"> <!-- Padding aumentato -->
 
-        <!-- Importanti -->
-        <Button
-            android:id="@+id/btn_importanti"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#FFC0CB"
-            android:text="@string/importanti"
-            android:textSize="22sp" />
 
-        <!-- Pianificazioni -->
-        <Button
-            android:id="@+id/btn_pianificazioni"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#90EE90"
-            android:text="@string/pianificazioni"
-            android:textSize="22sp" />
-
-        <!-- Cibi da Rimediare -->
-        <Button
-            android:id="@+id/btn_cibi_da_rimediare"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#90EE90"
-            android:text="@string/cibi_da_rimediare"
-            android:textSize="22sp" />
-
-        <!-- Cibi in Scadenza -->
-        <Button
-            android:id="@+id/btn_cibi_in_scadenza"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#800080"
-            android:text="@string/cibi_in_scadenza"
-            android:textSize="22sp" />
+        <!-- Alimenti in Scadenza -->
 
         <!-- Cibi Scaduti -->
         <Button
@@ -100,51 +67,28 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="#800080"
-            android:text="@string/cibi_scaduti"
+            android:text="@string/alimenti_scaduti"
             android:textSize="22sp" />
 
-        <!-- Assegnati a Me -->
         <Button
-            android:id="@+id/btn_assegnati_a_me"
+            android:id="@+id/btn_alimenti_in_scadenza"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#D3D3D3"
-            android:text="@string/assegnati_a_me"
+            android:background="#800080"
+            android:text="@string/alimenti_in_scadenza"
             android:textSize="22sp" />
-
-        <!-- Lista Default -->
-        <Button
-            android:id="@+id/btn_lista_default"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#D3D3D3"
-            android:text="@string/lista_default"
-            android:textSize="22sp" />
-
-
-        <!-- bottone per aggiungere una nuova lista
-        TODO spostarlo in basso a destra -->
-        <ImageButton
-            android:id="@+id/addListBtn"
-            android:layout_width="87dp"
-            android:layout_height="77dp"
-            android:background="#00FFFFFF"
-            android:scaleType="fitCenter"
-            app:srcCompat="@drawable/plus_icon" />
 
 
     </LinearLayout>
 
-
-
-    <!-- Linea Separatrice -->
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:paddingVertical="5dp"
-        android:background="@android:color/darker_gray" />
-
-    <!-- Liste Personalizzate dell'Utente -->
+    <!-- bottone per aggiungere una nuova lista -->
+    <ImageButton
+        android:id="@+id/addListBtn"
+        android:layout_width="87dp"
+        android:layout_height="77dp"
+        android:background="#00FFFFFF"
+        android:scaleType="fitCenter"
+        app:srcCompat="@drawable/plus_icon" />
 
     <!-- barra navigazione in basso -->
     <com.google.android.material.bottomnavigation.BottomNavigationView
@@ -156,6 +100,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:menu="@menu/bottom_nav_menu" />
+        app:menu="@menu/bottom_nav_menu">
+
+    </com.google.android.material.bottomnavigation.BottomNavigationView>
 
 </LinearLayout>

@@ -13,7 +13,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupMenu;
 import android.widget.TextView;
@@ -57,7 +56,6 @@ public class SettingsActivity extends AppCompatActivity implements PopupMenu.OnM
     DatabaseReference databaseReference;
     StorageReference storageReference;
     String uid;
-    ImageView set;
     TextView editUsername, editPassword;
     Button daysBeforeBtn;
     ProgressDialog pd;
@@ -71,10 +69,13 @@ public class SettingsActivity extends AppCompatActivity implements PopupMenu.OnM
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        /*setContentView(R.layout.fragment_settings);
+        getSupportFragmentManager().beginTransaction().replace(android.R.id.content, new SettingsFragment()).commit();
+        ^ nel caso volessi usare l'altra pagina delle impostazioni che ho in locale (se c'è tempo per implementarla bene)*/
+
         setContentView(R.layout.activity_settings);
 
         editUsername = findViewById(R.id.edit_username);
-        set = findViewById(R.id.setting_profile_image);
         pd = new ProgressDialog(this);
         pd.setCanceledOnTouchOutside(false);
         editPassword = findViewById(R.id.change_password);

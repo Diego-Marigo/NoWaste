@@ -10,19 +10,28 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.PopupMenu;
-import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.IgnoreExtraProperties;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * MainActivity:
@@ -32,16 +41,16 @@ import com.google.firebase.database.IgnoreExtraProperties;
 public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuItemClickListener {
     /*
     schermata iniziale in cui si vedono le liste
-
-    -> bisognerà creare tabella delle liste e tabella degli alimenti all'interno del db
      */
     FirebaseAuth auth;
     FirebaseUser user;
     private DatabaseReference mDatabase;
-    TextView textView;
-    Button logout;
     private BottomNavigationView bottomNavigationView;
     private ImageButton settingsBtn, searchBtn, addListBtn;
+    private Button alimentiScaduti, alimentiInScadenza;
+    RecyclerView recyclerView;
+    Adapter myAdapter;
+    ArrayList<com.example.nowaste.Liste> list;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +64,8 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
         settingsBtn = findViewById(R.id.settings_icon);
         searchBtn = findViewById(R.id.search_icon);
         addListBtn = findViewById(R.id.addListBtn);
+        alimentiScaduti = findViewById(R.id.btn_cibi_scaduti);
+        alimentiInScadenza = findViewById(R.id.btn_alimenti_in_scadenza);
 
         if(user == null) {
             Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
@@ -73,6 +84,37 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
             }
             return true;
         });
+/*
+        recyclerView = findViewById(R.id.listOfLists);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+
+        list = new ArrayList<>();
+        myAdapter = new Adapter(this, list);
+        recyclerView.setAdapter(myAdapter);
+
+        mDatabase.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for(DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    com.example.nowaste.Liste lista = dataSnapshot.getValue(com.example.nowaste.Liste.class);
+                    list.add(lista);
+                }
+                myAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+*/
+
+
+
+        // mostro le liste, se l'utente ne ha
+        //showLists();
 /*
         searchIcon.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -96,8 +138,26 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
             public void onClick(View view) {
                 // mostro un pop up per aggiungere il nome della lista
                 showAddListDailog(); // dentro qui poi verrà chiamato il metodo per aggiungerla al db
-                //TODO poi dovrà essere mostrata la lista nell'elenco
-                //credo quando avrà successo quindi OnSuccess() (?)
+            }
+        });
+
+        alimentiScaduti.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // apre pagina dei cibi scaduti
+                Intent intent = new Intent(getApplicationContext(), ProfileActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+
+        alimentiInScadenza.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // apre pagina dei cibi in scadenza
+                Intent intent = new Intent(getApplicationContext(), ProfileActivity.class);
+                startActivity(intent);
+                finish();
             }
         });
     }
@@ -126,31 +186,6 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
     }
 
 
-    /**
-     * Classe che rappresenta le Liste all'interno del database.
-     */
-    @IgnoreExtraProperties
-    public class Liste {
-        /*
-        una lista avrà un nome e un id; poi avrà l'userid dell'utente che crea la lista
-         */
-        public String nomeLista, userId;
-
-        /**
-         * Costruttore vuoto.
-         */
-        public Liste() {
-        }
-
-        /**
-         * Costruttore per la creazione di un oggetto di tipo Utente.
-         * @param nomeLista Nome della lista dell'utente
-         */
-        public Liste(String nomeLista, String userId) {
-            this.nomeLista = nomeLista;
-            this.userId = userId;
-        }
-    }
 
     /**
      * Metodo che scrive una nuova lista all'interno del database Firebase.
@@ -158,9 +193,21 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
      * @param nomeLista Nome della lista
      */
     public void writeNewList(String userId, String nomeLista) {
-        MainActivity.Liste listaAlimenti = new MainActivity.Liste(nomeLista, userId);
+        com.example.nowaste.Liste listaAlimenti = new com.example.nowaste.Liste(nomeLista, userId);
 
-        mDatabase.child("Liste").child(userId).setValue(listaAlimenti);
+        String listId = mDatabase.push().getKey();
+        mDatabase.child("Liste").child(listId).setValue(listaAlimenti).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void unused) {
+                Toast.makeText(MainActivity.this, "Lista creata correttamente", Toast.LENGTH_SHORT).show();
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(MainActivity.this, "La lista non è stata creata correttamente", Toast.LENGTH_SHORT).show();
+
+            }
+        });
     }
 
     /**
@@ -185,8 +232,6 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
                 dialog.dismiss();
                 //creo la lista di alimenti
                 writeNewList(user.getUid(), listName);
-                Toast.makeText(MainActivity.this, "Lista creata correttamente", Toast.LENGTH_SHORT).show();
-                // una volta che è stata creata dovrà essere visualizzata
             }
         });
     }
@@ -194,5 +239,27 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
     /*
     dovrò avere un metodo che, quando faccio la onCreate della pagina MainActivity,
      recupera dal db le liste dell'utente e le dovrà mostrare.
-     */
+
+     avere una lista in cui vengono memorizzate le liste?
+
+    private void showLists() {
+
+        getData();
+
+    }
+
+    private void getData(){
+        mDatabase.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                String value = snapshot.getValue(String.class);
+                textView.setText(value);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(MainActivity.this, "Fail to get data", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }*/
 }

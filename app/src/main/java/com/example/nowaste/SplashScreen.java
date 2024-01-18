@@ -23,7 +23,7 @@ public class SplashScreen extends AppCompatActivity {
 
         /*
         handler per fare in modo che al lancio dell'applicazione
-        si visualizzi il logo e, dopo due secondi, venga visualizzata la schermata di login
+        si visualizzi il logo e, dopo un secondo, venga visualizzata la schermata di login
          */
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
@@ -32,6 +32,6 @@ public class SplashScreen extends AppCompatActivity {
                 startActivity(new Intent(getApplicationContext(), LoginActivity.class));
                 finish();
             }
-        }, 2000);
+        }, 1000);
     }
 }

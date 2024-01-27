@@ -17,7 +17,7 @@ public class Alimenti {
 
     public String nomeAlimento;
     public int quantity;
-    public Date dataScadenza;
+    public String dataScadenza;
     public String listId;
     /**
      * Costruttore vuoto.
@@ -31,7 +31,7 @@ public class Alimenti {
      * @param quantity Quantità dell'alimento
      * @param dataScadenza Data di scadenza dell'alimento
      */
-    public Alimenti(String nomeAlimento, int quantity, Date dataScadenza, String listId) {
+    public Alimenti(String nomeAlimento, int quantity, String dataScadenza, String listId) {
         this.nomeAlimento = nomeAlimento;
         this.quantity = quantity;
         this.dataScadenza = dataScadenza;

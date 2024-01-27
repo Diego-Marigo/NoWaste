@@ -25,7 +25,7 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/nomeListalog"
+            android:id="@+id/nomeAlimentolog"
             android:hint="Nome alimento" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -84,7 +84,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/qntInput"
-                android:text="0"/>
+                android:text="0"
+                android:inputType="number"
+                android:selectAllOnFocus="true"/>
         </com.google.android.material.textfield.TextInputLayout>
 
     </LinearLayout>

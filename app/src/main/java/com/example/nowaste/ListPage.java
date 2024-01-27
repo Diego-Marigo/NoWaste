@@ -36,6 +36,7 @@ public class ListPage extends AppCompatActivity {
     private BottomNavigationView bottomNavigationView;
 
     private ImageButton aggiungiAlimentoBtn;
+    private String idLista;
 
 
     @Override
@@ -46,6 +47,11 @@ public class ListPage extends AppCompatActivity {
         auth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance().getReference();
         user = auth.getCurrentUser();
+
+        // recupero l'id della lista in cui sono tramite l'Intent
+        Intent intentOld = getIntent();
+        idLista = intentOld.getStringExtra("idLista");
+
         aggiungiAlimentoBtn = findViewById(R.id.addAlimentoBtn);
 
         bottomNavigationView = findViewById(R.id.bottomNavigationView);
@@ -72,33 +78,34 @@ public class ListPage extends AppCompatActivity {
 
     /**
      * Metodo che scrive un nuovo alimento all'interno del database Firebase.
-     * @param userId ID univoco dell'utente
-     * @param nomeLista Nome della lista
+     * @param nomeAlimento Nome dell'alimento da aggiungere al db
+     * @param quantity Quantità dell'alimento
+     * @param dataScadenza Data di scadenza
      */
- /*   public void writeNewList(String nomeAlimento, int quantity, Date dataScadenza, String listId) {
-        Alimenti alimento = new Alimenti(nomeAlimento, quantity, dataScadenza, listId);
+    public void writeNewAlimento(String nomeAlimento, int quantity, String dataScadenza) {
+        Alimenti alimento = new Alimenti(nomeAlimento, quantity, dataScadenza, idLista);
 
 
-        String listId = mDatabase.push().getKey();
-        mDatabase.child("Liste").child(listId).setValue(listaAlimenti).addOnSuccessListener(new OnSuccessListener<Void>() {
+        String idAlimento = mDatabase.push().getKey();
+        mDatabase.child("Alimenti").child(idLista).setValue(alimento).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void unused) {
-                Toast.makeText(ListPage.this, "Lista creata correttamente", Toast.LENGTH_SHORT).show();
+                Toast.makeText(ListPage.this, "Alimento aggiunto correttamente", Toast.LENGTH_SHORT).show();
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Toast.makeText(ListPage.this, "La lista non è stata creata correttamente", Toast.LENGTH_SHORT).show();
+                Toast.makeText(ListPage.this, "L'alimento non è stato aggiunto correttamente", Toast.LENGTH_SHORT).show();
 
             }
         });
-    }*/
+    }
     /**
      * Metodo che mostra una finestra di dialogo per la creazione di una nuova lista di alimenti.
      */
     private void showAddAlimentoDailog() {
         View view = LayoutInflater.from(this).inflate(R.layout.dialog_new_alimento, null);
-        final EditText nomeLista = view.findViewById(R.id.nomeListalog); // TODO cambiare nome
+        final EditText nomeAlimento = view.findViewById(R.id.nomeAlimentolog);
         ImageButton calendar = view.findViewById(R.id.calendarBtn);
         final TextView dataSelezionata = view.findViewById(R.id.dataSelezionata);
         Button confirm = view.findViewById(R.id.confirm_button);
@@ -132,18 +139,19 @@ public class ListPage extends AppCompatActivity {
                 datePickerDialog.show();
             }
         });
-        // TODO ancora da modificare
         confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String listName = nomeLista.getText().toString().trim();
-                if (TextUtils.isEmpty(listName)) {
-                    Toast.makeText(ListPage.this, "List name can't be empty", Toast.LENGTH_LONG).show();
+                String alimento = nomeAlimento.getText().toString().trim();
+                int qnty = Integer.parseInt(qnt.getText().toString());
+                String scadenza = dataSelezionata.getText().toString();
+                if (TextUtils.isEmpty(alimento)) {
+                    Toast.makeText(ListPage.this, "Il nome non può essere vuoto", Toast.LENGTH_LONG).show();
                     return;
                 }
                 dialog.dismiss();
-                //creo la lista di alimenti
-                //writeNewList(user.getUid(), listName);
+                //creo l'alimento
+                writeNewAlimento(alimento, qnty, scadenza);
             }
         });
     }

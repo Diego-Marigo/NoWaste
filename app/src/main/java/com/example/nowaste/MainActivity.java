@@ -51,6 +51,8 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
     RecyclerView recyclerView;
     Adapter myAdapter;
     ArrayList<com.example.nowaste.Liste> list;
+    ValueEventListener eventListener;
+    String idLista;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,7 +86,7 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
             }
             return true;
         });
-/*
+
         recyclerView = findViewById(R.id.listOfLists);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -93,13 +95,31 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
         list = new ArrayList<>();
         myAdapter = new Adapter(this, list);
         recyclerView.setAdapter(myAdapter);
+        /*
+        eventListener = mDatabase.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                list.clear();
+                for (DataSnapshot itemSnapshot: snapshot.getChildren()){
+                    com.example.nowaste.Liste dataClass = itemSnapshot.getValue(com.example.nowaste.Liste.class);
+                    //dataClass.setKey(itemSnapshot.getKey());
+                    list.add(dataClass);
+                }
+                myAdapter.notifyDataSetChanged();
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+            }
+        });*/
 
+        /*
         mDatabase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for(DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     com.example.nowaste.Liste lista = dataSnapshot.getValue(com.example.nowaste.Liste.class);
                     list.add(lista);
+
                 }
                 myAdapter.notifyDataSetChanged();
             }
@@ -145,7 +165,9 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
             @Override
             public void onClick(View view) {
                 // apre pagina dei cibi scaduti
-                Intent intent = new Intent(getApplicationContext(), ProfileActivity.class);
+                idLista = String.valueOf(1); // imposto ad 1 l'id per la lista degli alimenti scaduti
+                Intent intent = new Intent(getApplicationContext(), ListPage.class); // per test
+                intent.putExtra("idLista", idLista);
                 startActivity(intent);
                 finish();
             }
@@ -155,7 +177,7 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
             @Override
             public void onClick(View view) {
                 // apre pagina dei cibi in scadenza
-                Intent intent = new Intent(getApplicationContext(), ProfileActivity.class);
+                Intent intent = new Intent(getApplicationContext(), ListaAlimentiScadenza.class);
                 startActivity(intent);
                 finish();
             }
@@ -196,6 +218,7 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
         com.example.nowaste.Liste listaAlimenti = new com.example.nowaste.Liste(nomeLista, userId);
 
         String listId = mDatabase.push().getKey();
+        idLista = listId;
         mDatabase.child("Liste").child(listId).setValue(listaAlimenti).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void unused) {

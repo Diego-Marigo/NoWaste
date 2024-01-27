@@ -100,7 +100,7 @@
         app:layout_constraintHorizontal_bias="0.124"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <Switch
+    <androidx.appcompat.widget.SwitchCompat
         android:id="@+id/switch2"
         android:layout_width="334dp"
         android:layout_height="45dp"
@@ -114,7 +114,8 @@
         app:layout_constraintHorizontal_bias="0.428"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView3"
-        tools:checked="true" />
+        tools:checked="true"
+        />
 
     <TextView
         android:id="@+id/textView1"

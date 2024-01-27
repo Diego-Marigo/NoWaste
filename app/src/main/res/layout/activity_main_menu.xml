@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
@@ -8,10 +8,12 @@
     tools:context=".MainActivity">
 
     <LinearLayout
+        android:id="@+id/barraInAlto"
         android:layout_width="match_parent"
         android:layout_height="90dp"
-        android:paddingHorizontal="10dp"
-        android:orientation="horizontal">
+        android:layout_marginBottom="20dp"
+        android:orientation="horizontal"
+        android:paddingHorizontal="10dp">
 
         <!-- Icona Ricerca, 1/7 dello spazio -->
         <ImageButton
@@ -19,9 +21,9 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:scaleType="fitCenter"
             android:background="#00FFFFFF"
             android:contentDescription="@string/avvio_del_metodo_di_ricerca"
+            android:scaleType="fitCenter"
             android:src="@drawable/baseline_search_24" />
 
         <!-- Spazio Vuoto, 5/7 dello spazio -->
@@ -49,17 +51,21 @@
     </LinearLayout>
 
     <!-- Corpo della Schermata con LinearLayout -->
+
+
+    <!-- barra navigazione in basso -->
+
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="560dp"
+        android:layout_height="578dp"
+        android:layout_above="@+id/bottomNavigationView"
+        android:layout_below="@+id/barraInAlto"
+        android:layout_marginTop="-19dp"
+        android:layout_marginBottom="2dp"
         android:divider="?android:attr/dividerHorizontal"
-        android:dividerPadding="24dp"
         android:orientation="vertical"
         android:padding="16dp"
         android:showDividers="middle"> <!-- Padding aumentato -->
-
-
-        <!-- Alimenti in Scadenza -->
 
         <!-- Cibi Scaduti -->
         <Button
@@ -68,8 +74,10 @@
             android:layout_height="wrap_content"
             android:background="#800080"
             android:text="@string/alimenti_scaduti"
-            android:textSize="22sp" />
+            android:textSize="22sp"
+            android:paddingBottom="3dp"/>
 
+        <!-- Alimenti in Scadenza -->
         <Button
             android:id="@+id/btn_alimenti_in_scadenza"
             android:layout_width="match_parent"
@@ -91,29 +99,25 @@
             android:layout_height="77dp"
             android:background="#00FFFFFF"
             android:scaleType="fitCenter"
-            app:srcCompat="@drawable/plus_icon" />
+            app:srcCompat="@drawable/plus_icon"
+            android:layout_gravity="bottom"/>
 
 
     </LinearLayout>
 
-    <LinearLayout
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomNavigationView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        app:itemIconTint="@color/bottom_nav_color"
+        app:itemTextColor="@color/bottom_nav_color"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:menu="@menu/bottom_nav_menu"
+        android:layout_alignParentBottom="true">
 
-        <!-- barra navigazione in basso -->
-        <com.google.android.material.bottomnavigation.BottomNavigationView
-            android:id="@+id/bottomNavigationView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:itemIconTint="@color/bottom_nav_color"
-            app:itemTextColor="@color/bottom_nav_color"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:menu="@menu/bottom_nav_menu">
+    </com.google.android.material.bottomnavigation.BottomNavigationView>
 
-        </com.google.android.material.bottomnavigation.BottomNavigationView>
 
-    </LinearLayout>
-
-</LinearLayout>
+</RelativeLayout>

@@ -121,8 +121,8 @@ public class ProfileActivity extends AppCompatActivity implements PopupMenu.OnMe
         alertBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // si apre la pagina in cui si vedono tutte le notifiche delle scadenze
-                Intent intent = new Intent(getApplicationContext(), NotificationsActivity.class);
+                // si apre la pagina degli alimenti in scadenza
+                Intent intent = new Intent(getApplicationContext(), ListaAlimentiScadenza.class);
                 startActivity(intent);
                 finish();
             }

@@ -33,9 +33,6 @@
             android:label="@string/title_activity_custom_list_view"
             android:theme="@style/Theme.NoWaste" />
         <activity
-            android:name=".NotificationsActivity"
-            android:exported="false" />
-        <activity
             android:name=".SettingsActivity"
             android:exported="false" />
         <activity

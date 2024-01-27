@@ -16,6 +16,9 @@
         android:theme="@style/Theme.NoWaste"
         tools:targetApi="31">
         <activity
+            android:name=".ListPage"
+            android:exported="false" />
+        <activity
             android:name=".ListaAlimentiScadenza"
             android:exported="false" />
         <activity

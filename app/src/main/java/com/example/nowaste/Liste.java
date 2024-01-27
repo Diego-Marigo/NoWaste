@@ -20,7 +20,7 @@ public class Liste {
     }
 
     /**
-     * Costruttore per la creazione di un oggetto di tipo Utente.
+     * Costruttore per la creazione di un oggetto di tipo Lista.
      * @param nomeLista Nome della lista dell'utente
      */
     public Liste(String nomeLista, String userId) {

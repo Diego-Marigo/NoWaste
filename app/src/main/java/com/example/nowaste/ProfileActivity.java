@@ -72,31 +72,7 @@ public class ProfileActivity extends AppCompatActivity implements PopupMenu.OnMe
         });
 
         mDatabase = FirebaseDatabase.getInstance().getReference("users");
-        /*mDatabase.child(user.getUid()).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DataSnapshot> task) {
-                if (!task.isSuccessful()) {
-                    Toast.makeText(ProfileActivity.this, "Failed.",
-                            Toast.LENGTH_SHORT).show();
-                }
-                else {
-                    mUsername.setText(String.valueOf(task.getResult().getValue()));
-                }
-            }
-        });*/
-/*
-        mUsername= mDatabase.child("users").child(user.getUid()).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DataSnapshot> task) {
-                if (!task.isSuccessful()) {
-
-                }
-                else {
-
-                }
-            }
-        });*/
-        mUsername.setText(user.getDisplayName()); // TODO cambiare con username, devo leggerlo dal db
+        mUsername.setText(user.getDisplayName());
         mEmail.setText(user.getEmail());
 
         settingsBtn.setOnClickListener(new View.OnClickListener() {
@@ -122,6 +98,7 @@ public class ProfileActivity extends AppCompatActivity implements PopupMenu.OnMe
             @Override
             public void onClick(View view) {
                 // si apre la pagina degli alimenti in scadenza
+                // TODO modificare la pagina che si apre ( sarà da aprire CustomListView )
                 Intent intent = new Intent(getApplicationContext(), ListaAlimentiScadenza.class);
                 startActivity(intent);
                 finish();

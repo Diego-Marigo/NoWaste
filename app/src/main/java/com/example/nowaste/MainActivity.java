@@ -200,21 +200,20 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
             }
         });
     }
-/*
+
     private void filterList(String text) {
-        // devo scorrere tutte le liste dell'utente
+        //lista di tutti gli alimenti
+        //TODO la lascio qui dentro o ha senso averla anche all'esterno di questo metodo?
+        List<Alimenti> listaAlimenti = new ArrayList<>();
+        //mi creo la lista che sarà da mostrare con i risultati della ricerca
+        List<Alimenti> filteredList = new ArrayList<>();
 
-        // così mi recupero le liste dell'utente
-        /*
-        mi faccio una lista con gli id delle liste dell'utente
-        poi scorro questa lista e se l'alimento appartiene alla lista allora lo mostro
-
-        mDatabase.child("Liste").child(user.getUid());
-
-        mDatabase.child("Alimenti").child(user.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+        mDatabase.child("Alimenti").child(user.getUid());
+        mDatabase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                Liste l =
+                Alimenti a = snapshot.getValue(Alimenti.class);
+                listaAlimenti.add(a);
             }
 
             @Override
@@ -222,9 +221,25 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
 
             }
         });
-        // ora devo scorrerle tutte
 
-    }*/
+        for(Alimenti a : listaAlimenti) {
+            if(a.nomeAlimento.toLowerCase().contains(text.toLowerCase())) {
+                filteredList.add(a);
+            }
+        }
+        if(filteredList.isEmpty()) {
+            Toast.makeText(MainActivity.this, "Nessun risultato", Toast.LENGTH_SHORT).show();
+        } else {
+            /* nell'adapter (degli alimenti - da creare) faccio un metodo
+            public void setFilteredList(List<Alimenti> filteredList){
+                this.itemList = filteredList;
+                notifyDataSetChanged();
+            }
+             */
+
+        }
+    }
+
 
     /**
      * Metodo che gestisce i click sugli elementi del menu.

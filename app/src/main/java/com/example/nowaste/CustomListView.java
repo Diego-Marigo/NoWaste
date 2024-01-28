@@ -48,7 +48,7 @@ public class CustomListView extends AppCompatActivity implements PopupMenu.OnMen
     FirebaseAuth auth;
     FirebaseUser user;
     private DatabaseReference mDatabase;
-    private ImageButton aggiungiAlimentoBtn, settingsBtn;
+    private ImageButton aggiungiAlimentoBtn, settingsBtn, shareBtn;
     private String idLista;
     private TextView titolo; // nome lista da visualizzare nella pagina
 
@@ -81,7 +81,17 @@ public class CustomListView extends AppCompatActivity implements PopupMenu.OnMen
         titolo.setText(intentOld.getStringExtra("nomeLista"));
 
         aggiungiAlimentoBtn = findViewById(R.id.addAlimentoBtn);
+
+        // TODO da decommentare (intanto lascio il pulsante per test)
+        /*
+        // rimuovo il pulsante per aggiungere un alimento se mi trovo in alimentiScaduti o inScadenza
+        if(Integer.parseInt(idLista) == 1 || Integer.parseInt(idLista) == 2) {
+            aggiungiAlimentoBtn.setVisibility(View.INVISIBLE);
+        }
+         */
+
         settingsBtn = findViewById(R.id.btn_more);
+        shareBtn = findViewById(R.id.btn_share);
 
         bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
             if(item.getItemId() == R.id.profile){
@@ -113,6 +123,19 @@ public class CustomListView extends AppCompatActivity implements PopupMenu.OnMen
             }
         });
 
+        // TODO vedere se modificare ciò che si condivide
+        shareBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent sendIntent = new Intent();
+                sendIntent.setAction(Intent.ACTION_SEND);
+                sendIntent.putExtra(Intent.EXTRA_TEXT, "Ciao! " + user.getEmail() + " ti sta condividendo la sua lista.");
+                sendIntent.setType("text/plain");
+
+                Intent shareIntent = Intent.createChooser(sendIntent, null);
+                startActivity(shareIntent);
+            }
+        });
     }
 
     /**
@@ -126,7 +149,7 @@ public class CustomListView extends AppCompatActivity implements PopupMenu.OnMen
 
 
         String idAlimento = mDatabase.push().getKey();
-        mDatabase.child("Alimenti").child(idLista).setValue(alimento).addOnSuccessListener(new OnSuccessListener<Void>() {
+        mDatabase.child("Alimenti").child(user.getUid()).child(idAlimento).setValue(alimento).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void unused) {
                 Toast.makeText(CustomListView.this, "Alimento aggiunto correttamente", Toast.LENGTH_SHORT).show();

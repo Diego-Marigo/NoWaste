@@ -22,9 +22,6 @@
             android:name=".ListaAlimentiScaduti"
             android:exported="false" />
         <activity
-            android:name=".DetailListActivity"
-            android:exported="false" />
-        <activity
             android:name=".CustomListView"
             android:exported="false"
             android:label="@string/title_activity_custom_list_view"

@@ -15,28 +15,23 @@
         android:orientation="horizontal"
         android:paddingHorizontal="10dp">
 
-        <!-- Icona Ricerca, 1/7 dello spazio -->
-        <ImageButton
-            android:id="@+id/search_icon"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="#00FFFFFF"
-            android:contentDescription="@string/avvio_del_metodo_di_ricerca"
-            android:scaleType="fitCenter"
-            android:src="@drawable/baseline_search_24" />
-
-        <!-- Spazio Vuoto, 5/7 dello spazio -->
-        <View
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="5" />
 
         <!-- Icona Impostazioni, 1/7 dello spazio -->
+        <androidx.appcompat.widget.SearchView
+            android:id="@+id/searchView"
+            android:layout_width="312dp"
+            android:layout_height="63dp"
+            android:layout_margin="8dp"
+            android:layout_marginTop="10dp"
+            android:background="#FFFFFF"
+            app:iconifiedByDefault="false"
+            app:queryHint="Cerca un alimento ..."
+            android:focusable="false"/>
+
         <ImageButton
             android:id="@+id/settings_icon"
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="64dp"
             android:layout_weight="1"
             android:background="#00FFFFFF"
             android:contentDescription="@string/menu_impostazioni"

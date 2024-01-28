@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -32,6 +33,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * MainActivity:
@@ -46,7 +48,8 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
     FirebaseUser user;
     private DatabaseReference mDatabase;
     private BottomNavigationView bottomNavigationView;
-    private ImageButton settingsBtn, searchBtn, addListBtn;
+    private ImageButton settingsBtn,addListBtn;
+    private SearchView searchView;
     private Button alimentiScaduti, alimentiInScadenza;
     RecyclerView recyclerView;
     Adapter myAdapter;
@@ -64,7 +67,23 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
 
         user = auth.getCurrentUser();
         settingsBtn = findViewById(R.id.settings_icon);
-        searchBtn = findViewById(R.id.search_icon);
+
+        // ricerca di un alimento
+        searchView = findViewById(R.id.searchView);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                //filterList(newText);
+                return true;
+            }
+        });
+
+
         addListBtn = findViewById(R.id.addListBtn);
         alimentiScaduti = findViewById(R.id.btn_cibi_scaduti);
         alimentiInScadenza = findViewById(R.id.btn_alimenti_in_scadenza);
@@ -135,14 +154,7 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
 
         // mostro le liste, se l'utente ne ha
         //showLists();
-/*
-        searchIcon.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // TODO implementare la ricerca
-            }
-        });
-*/
+
         settingsBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -164,6 +176,7 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
         /* TODO se faccio così che passo il nome e l'id della lista,
             non ha senso avere le due pagine per alimenti scaduti e in scadenza (replico per niente)
          */
+        // alimentiScaduti sarà da sostituire da una delle voci del recycler view (se elimino le altre due pagine)
         alimentiScaduti.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -187,6 +200,31 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
             }
         });
     }
+/*
+    private void filterList(String text) {
+        // devo scorrere tutte le liste dell'utente
+
+        // così mi recupero le liste dell'utente
+        /*
+        mi faccio una lista con gli id delle liste dell'utente
+        poi scorro questa lista e se l'alimento appartiene alla lista allora lo mostro
+
+        mDatabase.child("Liste").child(user.getUid());
+
+        mDatabase.child("Alimenti").child(user.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                Liste l =
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+        // ora devo scorrerle tutte
+
+    }*/
 
     /**
      * Metodo che gestisce i click sugli elementi del menu.

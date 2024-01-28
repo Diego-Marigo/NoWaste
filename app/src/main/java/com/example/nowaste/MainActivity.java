@@ -223,7 +223,7 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
 
         String listId = mDatabase.push().getKey();
         idLista = listId;
-        mDatabase.child("Liste").child(listId).setValue(listaAlimenti).addOnSuccessListener(new OnSuccessListener<Void>() {
+        mDatabase.child("Liste").child(userId).child(listId).setValue(listaAlimenti).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void unused) {
                 Toast.makeText(MainActivity.this, "Lista creata correttamente", Toast.LENGTH_SHORT).show();

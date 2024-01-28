@@ -39,6 +39,9 @@ import java.util.List;
  * MainActivity:
  * Activity che costituisce la pagina principale dell'applicazione.
  * Qui sono visualizzate le liste degli alimenti.
+ *
+ * @author martinaragusa
+ * @since 2.0
  */
 public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuItemClickListener {
     /*
@@ -57,6 +60,11 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
     ValueEventListener eventListener;
     String idLista;
 
+    /**
+     * Metodo onCreate chiamato all'avvio dell'activity.
+     *
+     * @param savedInstanceState Oggetto che contiene dati forniti in precedenza in onSaveInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -150,8 +158,6 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
         });
 */
 
-
-
         // mostro le liste, se l'utente ne ha
         //showLists();
 
@@ -201,6 +207,10 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
         });
     }
 
+    /**
+     * Metodo per effettuare la ricerca. Permette di creare una lista in base all'input dell'utente.
+     * @param text Input dell'utente.
+     */
     private void filterList(String text) {
         //lista di tutti gli alimenti
         //TODO la lascio qui dentro o ha senso averla anche all'esterno di questo metodo?

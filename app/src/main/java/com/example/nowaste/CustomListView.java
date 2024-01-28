@@ -39,6 +39,14 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.Calendar;
 
+/**
+ * Activity per la visualizzazione di una lista.
+ * Questa classe contiene tutti i metodi che sono utilizzati all'interno della
+ * pagina per la visualizzazione degli alimenti appartinenti alla lista.
+ *
+ * @author Diego M., martinaragusa
+ * @since 2.0
+ */
 public class CustomListView extends AppCompatActivity implements PopupMenu.OnMenuItemClickListener{
 
     private AppBarConfiguration appBarConfiguration;
@@ -52,6 +60,11 @@ public class CustomListView extends AppCompatActivity implements PopupMenu.OnMen
     private String idLista;
     private TextView titolo; // nome lista da visualizzare nella pagina
 
+    /**
+     * Metodo onCreate chiamato all'avvio dell'activity.
+     *
+     * @param savedInstanceState Oggetto che contiene dati forniti in precedenza in onSaveInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -163,7 +176,7 @@ public class CustomListView extends AppCompatActivity implements PopupMenu.OnMen
         });
     }
     /**
-     * Metodo che mostra una finestra di dialogo per la creazione di una nuova lista di alimenti.
+     * Metodo che mostra una finestra di dialogo per la creazione di un nuovo alimento.
      */
     private void showAddAlimentoDailog() {
         View view = LayoutInflater.from(this).inflate(R.layout.dialog_new_alimento, null);

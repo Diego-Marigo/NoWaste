@@ -7,6 +7,9 @@ import java.util.Date;
 
 /**
  * Classe che rappresenta gli alimenti all'interno del database.
+ *
+ * @author martinaragusa
+ * @since 2.0
  */
 @IgnoreExtraProperties
 public class Alimenti {

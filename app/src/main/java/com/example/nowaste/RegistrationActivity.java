@@ -141,16 +141,14 @@ public class RegistrationActivity extends AppCompatActivity {
 
 
     /**
-     * Metodo che scrive una nuova lista all'interno del database Firebase.
+     * Metodo che crea le liste (vuote) degli alimenti in scadenza e quelli scaduti all'interno del database Firebase.
      * @param userId ID univoco dell'utente
      */
     public void writeLists(String userId) {
         com.example.nowaste.Liste alimentiInScadenza = new com.example.nowaste.Liste("Alimenti in scadenza", userId);
         com.example.nowaste.Liste alimentiScaduti = new com.example.nowaste.Liste("Alimenti scaduti", userId);
 
-
         //quando creo un utente creo di default le due liste di in scadenza e scaduti (vuote)
-
         mDatabase.child("Liste").child(userId).child("1").setValue(alimentiScaduti);
         mDatabase.child("Liste").child(userId).child("2").setValue(alimentiInScadenza);
     }

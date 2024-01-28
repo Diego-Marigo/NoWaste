@@ -37,11 +37,6 @@ import com.google.firebase.auth.GoogleAuthProvider;
  * @since 1.0
  */
 public class LoginActivity extends AppCompatActivity {
-    /*
-    gli utenti sono
-    test5@email.com con psw 123456
-
-     */
     /**
      * Elementi UI della pagina
      */

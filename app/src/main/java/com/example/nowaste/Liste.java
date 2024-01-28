@@ -5,6 +5,8 @@ import com.google.firebase.database.IgnoreExtraProperties;
 
 /**
  * Classe che rappresenta le Liste all'interno del database.
+ *
+ * @author martinaragusa
  */
 @IgnoreExtraProperties
 public class Liste {

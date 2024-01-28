@@ -1,14 +1,29 @@
 package com.example.nowaste;
 
+import android.app.AlertDialog;
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.snackbar.Snackbar;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.text.TextUtils;
+import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.DatePicker;
+import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.PopupMenu;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.core.view.WindowCompat;
 import androidx.navigation.NavController;
@@ -17,12 +32,25 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.example.nowaste.databinding.ActivityCustomListViewBinding;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
-public class CustomListView extends AppCompatActivity {
+import java.util.Calendar;
+
+public class CustomListView extends AppCompatActivity implements PopupMenu.OnMenuItemClickListener{
 
     private AppBarConfiguration appBarConfiguration;
     private ActivityCustomListViewBinding binding;
     private BottomNavigationView bottomNavigationView;
+
+    FirebaseAuth auth;
+    FirebaseUser user;
+    private DatabaseReference mDatabase;
+    private ImageButton aggiungiAlimentoBtn, settingsBtn;
+    private String idLista;
+    private TextView titolo; // nome lista da visualizzare nella pagina
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,10 +65,23 @@ public class CustomListView extends AppCompatActivity {
         //nessuno dei due della barra sotto è selezionato
         bottomNavigationView.setSelectedItemId(R.id.invisible);
 
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_custom_list_view);
-        appBarConfiguration = new AppBarConfiguration.Builder(navController.getGraph()).build();
-        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
+        //NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_custom_list_view);
+        //appBarConfiguration = new AppBarConfiguration.Builder(navController.getGraph()).build();
+        //NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
 
+        auth = FirebaseAuth.getInstance();
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+        user = auth.getCurrentUser();
+
+        // recupero l'id e il nome della lista in cui sono tramite l'Intent
+        Intent intentOld = getIntent();
+        idLista = intentOld.getStringExtra("idLista");
+
+        titolo = findViewById(R.id.tv_list_name);
+        titolo.setText(intentOld.getStringExtra("nomeLista"));
+
+        aggiungiAlimentoBtn = findViewById(R.id.addAlimentoBtn);
+        settingsBtn = findViewById(R.id.btn_more);
 
         bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
             if(item.getItemId() == R.id.profile){
@@ -55,16 +96,103 @@ public class CustomListView extends AppCompatActivity {
             return true;
         });
 
-        /*
-        commento solo perchè non mi trova fab
-        binding.fab.setOnClickListener(new View.OnClickListener() {
+        settingsBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAnchorView(R.id.fab)
-                        .setAction("Action", null).show();
+                PopupMenu popupMenu = new PopupMenu(getApplicationContext(), view);
+                popupMenu.setOnMenuItemClickListener(CustomListView.this);
+                popupMenu.getMenuInflater().inflate(R.menu.popup_menu, popupMenu.getMenu());
+                popupMenu.show();
             }
-        });*/
+        });
+
+        aggiungiAlimentoBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showAddAlimentoDailog();
+            }
+        });
+
+    }
+
+    /**
+     * Metodo che scrive un nuovo alimento all'interno del database Firebase.
+     * @param nomeAlimento Nome dell'alimento da aggiungere al db
+     * @param quantity Quantità dell'alimento
+     * @param dataScadenza Data di scadenza
+     */
+    public void writeNewAlimento(String nomeAlimento, int quantity, String dataScadenza) {
+        Alimenti alimento = new Alimenti(nomeAlimento, quantity, dataScadenza, idLista);
+
+
+        String idAlimento = mDatabase.push().getKey();
+        mDatabase.child("Alimenti").child(idLista).setValue(alimento).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void unused) {
+                Toast.makeText(CustomListView.this, "Alimento aggiunto correttamente", Toast.LENGTH_SHORT).show();
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(CustomListView.this, "L'alimento non è stato aggiunto correttamente", Toast.LENGTH_SHORT).show();
+
+            }
+        });
+    }
+    /**
+     * Metodo che mostra una finestra di dialogo per la creazione di una nuova lista di alimenti.
+     */
+    private void showAddAlimentoDailog() {
+        View view = LayoutInflater.from(this).inflate(R.layout.dialog_new_alimento, null);
+        final EditText nomeAlimento = view.findViewById(R.id.nomeAlimentolog);
+        ImageButton calendar = view.findViewById(R.id.calendarBtn);
+        final TextView dataSelezionata = view.findViewById(R.id.dataSelezionata);
+        Button confirm = view.findViewById(R.id.confirm_button);
+        final EditText qnt = view.findViewById(R.id.qntInput);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setView(view);
+        final AlertDialog dialog = builder.create();
+        dialog.show();
+
+        calendar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                final Calendar c = Calendar.getInstance();
+
+                int year = c.get(Calendar.YEAR);
+                int month = c.get(Calendar.MONTH);
+                int day = c.get(Calendar.DAY_OF_MONTH);
+
+                DatePickerDialog datePickerDialog = new DatePickerDialog(
+                        CustomListView.this,
+                        new DatePickerDialog.OnDateSetListener() {
+                            @Override
+                            public void onDateSet(DatePicker view, int year,
+                                                  int monthOfYear, int dayOfMonth) {
+                                dataSelezionata.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
+
+                            }
+                        },
+                        year, month, day);
+                datePickerDialog.show();
+            }
+        });
+        confirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String alimento = nomeAlimento.getText().toString().trim();
+                int qnty = Integer.parseInt(qnt.getText().toString());
+                String scadenza = dataSelezionata.getText().toString();
+                if (TextUtils.isEmpty(alimento)) {
+                    Toast.makeText(CustomListView.this, "Il nome non può essere vuoto", Toast.LENGTH_LONG).show();
+                    return;
+                }
+                dialog.dismiss();
+                //creo l'alimento
+                writeNewAlimento(alimento, qnty, scadenza);
+            }
+        });
     }
 
     @Override
@@ -72,5 +200,28 @@ public class CustomListView extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_custom_list_view);
         return NavigationUI.navigateUp(navController, appBarConfiguration)
                 || super.onSupportNavigateUp();
+    }
+
+    /**
+     * Metodo che gestisce i click sugli elementi del menu.
+     *
+     * @param item Elemento del menu selezionato
+     * @return True se l'evento è stato gestito, False altrimenti
+     */
+    @Override
+    public boolean onMenuItemClick(MenuItem item) {
+        if(item.getItemId() == R.id.settings) {
+            Intent intent = new Intent(getApplicationContext(), SettingsActivity.class);
+            startActivity(intent);
+            finish();
+            return true;
+        } else if(item.getItemId() == R.id.logout) {
+            FirebaseAuth.getInstance().signOut();
+            Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+            startActivity(intent);
+            finish();
+            return true;
+        }
+        return false;
     }
 }

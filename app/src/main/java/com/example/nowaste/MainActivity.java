@@ -161,13 +161,17 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
             }
         });
 
+        /* TODO se faccio così che passo il nome e l'id della lista,
+            non ha senso avere le due pagine per alimenti scaduti e in scadenza (replico per niente)
+         */
         alimentiScaduti.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 // apre pagina dei cibi scaduti
                 idLista = String.valueOf(1); // imposto ad 1 l'id per la lista degli alimenti scaduti
-                Intent intent = new Intent(getApplicationContext(), ListPage.class); // per test
+                Intent intent = new Intent(getApplicationContext(), CustomListView.class); // per test
                 intent.putExtra("idLista", idLista);
+                intent.putExtra("nomeLista", "Alimenti scaduti");
                 startActivity(intent);
                 finish();
             }

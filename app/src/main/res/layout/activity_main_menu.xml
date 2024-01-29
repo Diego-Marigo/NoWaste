@@ -81,13 +81,16 @@
             android:text="@string/alimenti_in_scadenza"
             android:textSize="22sp" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/listOfLists"
-            android:layout_width="match_parent"
-            android:layout_height="333dp" />
+
 
 
         <!-- bottone per aggiungere una nuova lista -->
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/listOfLists"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
         <ImageButton
             android:id="@+id/addListBtn"
             android:layout_width="87dp"

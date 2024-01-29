@@ -28,11 +28,9 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.IgnoreExtraProperties;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -54,7 +52,7 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
     private ImageButton settingsBtn,addListBtn;
     private SearchView searchView;
     private Button alimentiScaduti, alimentiInScadenza;
-    RecyclerView recyclerView;
+    RecyclerView listOfCustomLists;
     Adapter myAdapter;
     ArrayList<com.example.nowaste.Liste> list;
     ValueEventListener eventListener;
@@ -114,15 +112,16 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
             return true;
         });
 
-        recyclerView = findViewById(R.id.listOfLists);
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        ListaAdapter adapter;
+        listOfCustomLists = findViewById(R.id.listOfLists);
+        listOfCustomLists.setHasFixedSize(true);
+        listOfCustomLists.setLayoutManager(new LinearLayoutManager(this));
 
+        ArrayList<ListaItem> customLists = new ArrayList<>();
+        adapter = new ListaAdapter(customLists, this);
+        listOfCustomLists.setAdapter(adapter);
 
-        list = new ArrayList<>();
-        myAdapter = new Adapter(this, list);
-        recyclerView.setAdapter(myAdapter);
-        /*
+        DatabaseReference referenceListe = FirebaseDatabase.getInstance().getReference("Liste");
         eventListener = mDatabase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -136,8 +135,15 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(MainActivity.this, "Errore nel recupero dei dati", Toast.LENGTH_SHORT).show();
             }
-        });*/
+        });
+
+                /*
+                list = new ArrayList<>();
+                myAdapter = new Adapter(this, list);
+                listOfCustomLists.setAdapter(myAdapter);
+                */
 
         /*
         mDatabase.addValueEventListener(new ValueEventListener() {

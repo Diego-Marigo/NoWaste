@@ -36,22 +36,25 @@ import java.util.List;
 /**
  * MainActivity:
  * Activity che costituisce la pagina principale dell'applicazione.
- * Qui sono visualizzate le liste degli alimenti.
+ * Serve come porta d'accesso alle liste degli alimenti.
  *
  * @author martinaragusa
  * @since 2.0
  */
 public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuItemClickListener {
-    /*
-    schermata iniziale in cui si vedono le liste
-     */
+
+    // componenti per l'API firebase di Google (autenticazione e database online)
     FirebaseAuth auth;
     FirebaseUser user;
     private DatabaseReference mDatabase;
+
+    // Componenti statici della schermata
     private BottomNavigationView bottomNavigationView;
     private ImageButton settingsBtn,addListBtn;
     private SearchView searchView;
     private Button alimentiScaduti, alimentiInScadenza;
+
+    //
     RecyclerView listOfCustomLists;
     Adapter myAdapter;
     ArrayList<com.example.nowaste.Liste> list;
@@ -71,29 +74,16 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_menu);
 
+        // recupero del riferimento per il database
         auth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance().getReference();
 
         user = auth.getCurrentUser();
         settingsBtn = findViewById(R.id.settings_icon);
         myAdapter = new Adapter(this, listaAlimenti);
-/*
 
-        mDatabase.child("Alimenti").child(user.getUid());
-        mDatabase.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                AlimentoItem a = snapshot.getValue(AlimentoItem.class);
-                listaAlimenti.add(a);
-            }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });*/
-
-        // ricerca di un alimento
+        // codice per le funzionalità della barra di ricerca
         searchView = findViewById(R.id.searchView);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -109,6 +99,8 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
         });
 
 
+        // codice per l'apertura delle viste speciali per gli alimenti scaduti ed in scadenza
+        // TODO!!
         addListBtn = findViewById(R.id.addListBtn);
         alimentiScaduti = findViewById(R.id.btn_cibi_scaduti);
         alimentiInScadenza = findViewById(R.id.btn_alimenti_in_scadenza);
@@ -119,6 +111,9 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
             finish();
         }
 
+        // Comandi per i pulsanti della barra inferiore
+        //    - pulsante Home
+        //    - pulsante Profilo
         bottomNavigationView = findViewById(R.id.bottomNavigationView);
         bottomNavigationView.setSelectedItemId(R.id.home);
 
@@ -131,6 +126,7 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
             return true;
         });
 
+        // Sezione di codice per la visualizzazione della lista delle liste di alimenti dal database
         ListaAdapter adapter;
         listOfCustomLists = findViewById(R.id.listOfLists);
         listOfCustomLists.setHasFixedSize(true);
@@ -147,7 +143,6 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
                 customLists.clear();
                 for (DataSnapshot itemSnapshot: snapshot.getChildren()){
                     ListaItem dataClass = itemSnapshot.getValue(ListaItem.class);
-                    //dataClass.setKey(itemSnapshot.getKey());
                     customLists.add(dataClass);
                 }//
                 adapter.notifyDataSetChanged();
@@ -158,6 +153,7 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
             }
         });
 
+        // Programmazione del tasto per poter accedere alle impostazioni
         settingsBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -168,6 +164,7 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
             }
         });
 
+        // metodo per l'implementazione del tasto di aggiunta di una voce alla lista delle lista
         addListBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

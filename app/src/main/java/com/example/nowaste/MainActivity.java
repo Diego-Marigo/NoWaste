@@ -130,7 +130,7 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
                     com.example.nowaste.Liste dataClass = itemSnapshot.getValue(com.example.nowaste.Liste.class);
                     //dataClass.setKey(itemSnapshot.getKey());
                     list.add(dataClass);
-                }
+                }//
                 myAdapter.notifyDataSetChanged();
             }
             @Override

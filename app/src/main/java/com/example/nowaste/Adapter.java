@@ -11,13 +11,23 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
+
 import java.util.ArrayList;
+import java.util.Date;
 
 public class Adapter extends RecyclerView.Adapter<Adapter.viewHolder> {
     Context context;
-    ArrayList<Alimenti> listAlimenti;
+    ArrayList<AlimentoItem> listAlimenti;
 
-    public Adapter(Context context, ArrayList<Alimenti> listAlimenti) {
+    public Adapter(Context context, ArrayList<AlimentoItem> listAlimenti) {
         this.context = context;
         this.listAlimenti = listAlimenti;
     }
@@ -31,10 +41,10 @@ public class Adapter extends RecyclerView.Adapter<Adapter.viewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull viewHolder holder, int position) {
-        Alimenti item = listAlimenti.get(position);
-        holder.nomeAlimento.setText(item.nomeAlimento);
-        //holder.dataScadenza.setText(item.dataScadenza.toString());
-        //holder.quantity.setText(Integer.valueOf(item.quantity));
+        AlimentoItem item = listAlimenti.get(position);
+        holder.nomeAlimento.setText(item.getNomeAlimento());
+        holder.dataScadenza.setText(item.getDate());
+        holder.quantity.setText(Integer.toString(item.getQuantity()));
     }
 
     @Override
@@ -66,6 +76,23 @@ public class Adapter extends RecyclerView.Adapter<Adapter.viewHolder> {
                 @Override
                 public void onClick(View view) {
                     // TODO
+                    // itemView.setVisibility(View.GONE);
+                    DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
+                    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                    Query q = ref.child("Alimenti").child(user.getUid()); // TODO la query non è completa devo recuperarmi l'id dell'alimento ma non so come
+                    q.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            for(DataSnapshot d : snapshot.getChildren()){
+                                d.getRef().removeValue();
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
                 }
             });
         }

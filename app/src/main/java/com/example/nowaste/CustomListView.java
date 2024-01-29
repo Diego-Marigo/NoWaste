@@ -163,17 +163,17 @@ public class CustomListView extends AppCompatActivity implements PopupMenu.OnMen
         listOfFood.setHasFixedSize(true);
         listOfFood.setLayoutManager(new LinearLayoutManager(this));
 
-        ArrayList<Alimenti> customLists = new ArrayList<>();
+        ArrayList<AlimentoItem> customLists = new ArrayList<>();
         adapter = new Adapter(this, customLists);
         listOfFood.setAdapter(adapter);
 
-        DatabaseReference referenceListe = FirebaseDatabase.getInstance().getReference("Liste").child(user.getUid());
+        DatabaseReference referenceListe = FirebaseDatabase.getInstance().getReference("Alimenti").child(user.getUid());
         eventListener = referenceListe.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 customLists.clear();
                 for (DataSnapshot itemSnapshot: snapshot.getChildren()){
-                    Alimenti dataClass = itemSnapshot.getValue(Alimenti.class);
+                    AlimentoItem dataClass = itemSnapshot.getValue(AlimentoItem.class);
                     //dataClass.setKey(itemSnapshot.getKey());
                     customLists.add(dataClass);
                 }//

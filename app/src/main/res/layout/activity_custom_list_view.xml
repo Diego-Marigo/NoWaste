@@ -51,9 +51,10 @@
         <!-- bottone per aggiungere un nuovo alimento -->
         <ImageButton
             android:id="@+id/addAlimentoBtn"
-            android:layout_width="66dp"
-            android:layout_height="45dp"
+            android:layout_width="68dp"
+            android:layout_height="51dp"
             android:background="#00FFFFFF"
+            android:paddingTop="10dp"
             android:scaleType="fitCenter"
             app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView"
             app:layout_constraintEnd_toEndOf="parent"

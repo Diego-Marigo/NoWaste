@@ -104,7 +104,6 @@ public class ProfileActivity extends AppCompatActivity implements PopupMenu.OnMe
             @Override
             public void onClick(View view) {
                 // si apre la pagina degli alimenti in scadenza
-                // TODO modificare la pagina che si apre ( sarà da aprire CustomListView )
                 Intent intent = new Intent(getApplicationContext(), ListaAlimentiScadenza.class);
                 startActivity(intent);
                 finish();

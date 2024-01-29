@@ -103,14 +103,12 @@ public class CustomListView extends AppCompatActivity implements PopupMenu.OnMen
 
         aggiungiAlimentoBtn = findViewById(R.id.addAlimentoBtn);
 
-        // TODO da decommentare (intanto lascio il pulsante per test)
-        /*
+        /* TODO
         // rimuovo il pulsante per aggiungere un alimento se mi trovo in alimentiScaduti o inScadenza
         if(Integer.parseInt(idLista) == 1 || Integer.parseInt(idLista) == 2) {
             aggiungiAlimentoBtn.setVisibility(View.INVISIBLE);
         }
-         */
-
+*/
         settingsBtn = findViewById(R.id.btn_more);
         shareBtn = findViewById(R.id.btn_share);
 
@@ -144,7 +142,6 @@ public class CustomListView extends AppCompatActivity implements PopupMenu.OnMen
             }
         });
 
-        // TODO vedere se modificare ciò che si condivide
         shareBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

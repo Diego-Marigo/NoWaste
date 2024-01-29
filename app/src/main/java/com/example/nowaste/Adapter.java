@@ -22,6 +22,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class Adapter extends RecyclerView.Adapter<Adapter.viewHolder> {
     Context context;
@@ -75,8 +76,6 @@ public class Adapter extends RecyclerView.Adapter<Adapter.viewHolder> {
             delete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    // TODO
-                    // itemView.setVisibility(View.GONE);
                     DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
                     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                     Query q = ref.child("Alimenti").child(user.getUid()); // TODO la query non è completa devo recuperarmi l'id dell'alimento ma non so come
@@ -98,4 +97,10 @@ public class Adapter extends RecyclerView.Adapter<Adapter.viewHolder> {
         }
 
     }
+    /*
+    per la ricerca
+    public void setFilteredList(ArrayList<AlimentoItem> filteredList){
+        this.listAlimenti = filteredList;
+        notifyDataSetChanged();
+    }*/
 }

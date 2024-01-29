@@ -57,6 +57,9 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
     ArrayList<com.example.nowaste.Liste> list;
     ValueEventListener eventListener;
     String idLista;
+    //lista di tutti gli alimenti
+    ArrayList<AlimentoItem> listaAlimenti = new ArrayList<>();
+
 
     /**
      * Metodo onCreate chiamato all'avvio dell'activity.
@@ -73,6 +76,22 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
 
         user = auth.getCurrentUser();
         settingsBtn = findViewById(R.id.settings_icon);
+        myAdapter = new Adapter(this, listaAlimenti);
+/*
+
+        mDatabase.child("Alimenti").child(user.getUid());
+        mDatabase.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                AlimentoItem a = snapshot.getValue(AlimentoItem.class);
+                listaAlimenti.add(a);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });*/
 
         // ricerca di un alimento
         searchView = findViewById(R.id.searchView);
@@ -84,7 +103,7 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                //filterList(newText);
+                filterList(newText);
                 return true;
             }
         });
@@ -157,16 +176,12 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
             }
         });
 
-        /* TODO se faccio così che passo il nome e l'id della lista,
-            non ha senso avere le due pagine per alimenti scaduti e in scadenza (replico per niente)
-         */
-        // alimentiScaduti sarà da sostituire da una delle voci del recycler view (se elimino le altre due pagine)
         alimentiScaduti.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 // apre pagina dei cibi scaduti
                 idLista = String.valueOf(1); // imposto ad 1 l'id per la lista degli alimenti scaduti
-                Intent intent = new Intent(getApplicationContext(), CustomListView.class); // per test
+                Intent intent = new Intent(getApplicationContext(), CustomListView.class);
                 intent.putExtra("idLista", idLista);
                 intent.putExtra("nomeLista", "Alimenti scaduti");
                 startActivity(intent);
@@ -178,7 +193,10 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
             @Override
             public void onClick(View view) {
                 // apre pagina dei cibi in scadenza
-                Intent intent = new Intent(getApplicationContext(), ListaAlimentiScadenza.class);
+                idLista = String.valueOf(2); // imposto a 2 l'id per la lista degli alimenti in scadenza
+                Intent intent = new Intent(getApplicationContext(), CustomListView.class);
+                intent.putExtra("idLista", idLista);
+                intent.putExtra("nomeLista", "Alimenti scaduti");
                 startActivity(intent);
                 finish();
             }
@@ -190,34 +208,19 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
      * @param text Input dell'utente.
      */
     private void filterList(String text) {
-        //lista di tutti gli alimenti
-        //TODO la lascio qui dentro o ha senso averla anche all'esterno di questo metodo?
-        List<Alimenti> listaAlimenti = new ArrayList<>();
         //mi creo la lista che sarà da mostrare con i risultati della ricerca
-        List<Alimenti> filteredList = new ArrayList<>();
+        ArrayList<AlimentoItem> filteredList = new ArrayList<>();
 
-        mDatabase.child("Alimenti").child(user.getUid());
-        mDatabase.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                Alimenti a = snapshot.getValue(Alimenti.class);
-                listaAlimenti.add(a);
-            }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-
-        for(Alimenti a : listaAlimenti) {
-            if(a.nomeAlimento.toLowerCase().contains(text.toLowerCase())) {
+        for(AlimentoItem a : listaAlimenti) {
+            if(a.getNomeAlimento().toLowerCase().contains(text.toLowerCase())) {
                 filteredList.add(a);
             }
         }
         if(filteredList.isEmpty()) {
             Toast.makeText(MainActivity.this, "Nessun risultato", Toast.LENGTH_SHORT).show();
         } else {
+            //myAdapter.setFilteredList(filteredList);
             /* nell'adapter (degli alimenti - da creare) faccio un metodo
             public void setFilteredList(List<Alimenti> filteredList){
                 this.itemList = filteredList;

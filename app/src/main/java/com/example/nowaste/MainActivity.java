@@ -121,51 +121,23 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
         adapter = new ListaAdapter(customLists, this);
         listOfCustomLists.setAdapter(adapter);
 
-        DatabaseReference referenceListe = FirebaseDatabase.getInstance().getReference("Liste");
-        eventListener = mDatabase.addValueEventListener(new ValueEventListener() {
+        DatabaseReference referenceListe = FirebaseDatabase.getInstance().getReference("Liste").child(user.getUid());
+        eventListener = referenceListe.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                list.clear();
+                customLists.clear();
                 for (DataSnapshot itemSnapshot: snapshot.getChildren()){
-                    com.example.nowaste.Liste dataClass = itemSnapshot.getValue(com.example.nowaste.Liste.class);
+                    ListaItem dataClass = itemSnapshot.getValue(ListaItem.class);
                     //dataClass.setKey(itemSnapshot.getKey());
-                    list.add(dataClass);
+                    customLists.add(dataClass);
                 }//
-                myAdapter.notifyDataSetChanged();
+                adapter.notifyDataSetChanged();
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 Toast.makeText(MainActivity.this, "Errore nel recupero dei dati", Toast.LENGTH_SHORT).show();
             }
         });
-
-                /*
-                list = new ArrayList<>();
-                myAdapter = new Adapter(this, list);
-                listOfCustomLists.setAdapter(myAdapter);
-                */
-
-        /*
-        mDatabase.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for(DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                    com.example.nowaste.Liste lista = dataSnapshot.getValue(com.example.nowaste.Liste.class);
-                    list.add(lista);
-
-                }
-                myAdapter.notifyDataSetChanged();
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-*/
-
-        // mostro le liste, se l'utente ne ha
-        //showLists();
 
         settingsBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -331,31 +303,4 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
             }
         });
     }
-
-    /*
-    dovrò avere un metodo che, quando faccio la onCreate della pagina MainActivity,
-     recupera dal db le liste dell'utente e le dovrà mostrare.
-
-     avere una lista in cui vengono memorizzate le liste?
-
-    private void showLists() {
-
-        getData();
-
-    }
-
-    private void getData(){
-        mDatabase.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                String value = snapshot.getValue(String.class);
-                textView.setText(value);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(MainActivity.this, "Fail to get data", Toast.LENGTH_SHORT).show();
-            }
-        });
-    }*/
 }

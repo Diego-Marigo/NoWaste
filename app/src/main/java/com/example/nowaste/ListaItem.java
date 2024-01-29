@@ -4,6 +4,12 @@ public class ListaItem {
     private String nomeLista;
     private String userId;
 
+    /**
+     * Costruttore vuoto.
+     */
+    public ListaItem() {
+    }
+
     public ListaItem(String nomeLista, String userId) {
         this.nomeLista = nomeLista;
         this.userId = userId;

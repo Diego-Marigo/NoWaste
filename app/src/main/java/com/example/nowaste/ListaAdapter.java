@@ -1,5 +1,6 @@
 package com.example.nowaste;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,7 +29,11 @@ public class ListaAdapter extends RecyclerView.Adapter<ListaAdapter.ViewHolder> 
     public void onBindViewHolder(ViewHolder holder, int position) {
         ListaItem item = listaItems.get(position);
         holder.textViewNomeLista.setText(item.getNomeLista());
-        //  listener per il clic sull'elemento?
+        holder.itemView.setOnClickListener(v -> {
+            Intent intent = new Intent(context, CustomListView.class);
+            intent.putExtra("listId", item.getUserId()); // Passa l'ID della lista
+            context.startActivity(intent);
+        });
     }
 
     @Override

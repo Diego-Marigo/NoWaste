@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+// Nece
 public class Adapter extends RecyclerView.Adapter<Adapter.viewHolder> {
     Context context;
     ArrayList<AlimentoItem> listAlimenti;

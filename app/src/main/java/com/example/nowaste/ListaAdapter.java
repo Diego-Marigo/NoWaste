@@ -32,6 +32,7 @@ public class ListaAdapter extends RecyclerView.Adapter<ListaAdapter.ViewHolder> 
         holder.itemView.setOnClickListener(v -> {
             Intent intent = new Intent(context, CustomListView.class);
             intent.putExtra("listId", item.getUserId()); // Passa l'ID della lista
+            intent.putExtra("nomeLista", item.getNomeLista());
             context.startActivity(intent);
         });
     }
